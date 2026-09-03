@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Favicon Pestaña -->
+  <link rel="icon" type="image/svg+xml" href="/favicon-fundacion.svg" />
+  <link rel="apple-touch-icon" href="/og-fundacion.jpg" />
+
+  <!-- Google Brand Card & WhatsApp / Facebook Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://valledeluz.dpdns.org/" />
+  <meta property="og:title" content="Fundación Valle de Luz — Acción Social y Solidaridad en Traslasierra" />
+  <meta property="og:description" content="Sembrando esperanza, asistencia alimentaria y dignidad en los parajes de Traslasierra, Córdoba." />
+  <meta property="og:image" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <meta property="og:image:secure_url" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Fundación Valle de Luz" />
+  <meta property="og:site_name" content="Fundación Valle de Luz" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fundación Valle de Luz — Acción Social y Solidaridad en Traslasierra" />
+  <meta name="twitter:description" content="Sembrando esperanza, asistencia alimentaria y dignidad en los parajes de Traslasierra, Córdoba." />
+  <meta name="twitter:image" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <link rel="canonical" href="https://valledeluz.dpdns.org/" />
+  <title>Fundación Valle de Luz — Acción Social y Solidaridad en Traslasierra</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['Cinzel', 'serif']
+          },
+          colors: {
+            faro: {
+              gold: '#E5C07B',
+              earth: '#C68B59',
+              purple: '#8B5CF6',
+              cyan: '#06B6D4',
+              dark: '#070A0F'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#020617] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-emerald-200 overflow-x-hidden">
+
+  <!-- PRELOADER -->
+  <div id="preloader" class="fixed inset-0 z-50 bg-[#020617] flex flex-col items-center justify-center transition-opacity duration-700">
+    <div class="relative flex flex-col items-center">
+      <div class="w-16 h-16 rounded-full border-2 border-amber-500/20 border-t-amber-400 animate-spin mb-6"></div>
+      <div class="font-serif tracking-widest text-xl text-emerald-200 uppercase mb-2">Fundación Valle de Luz</div>
+      <div class="text-xs text-slate-400 font-mono" id="preloader-text">Inicializando Búnker y Fotogramas: 0%</div>
+      <div class="w-64 h-1.5 bg-slate-800 rounded-full mt-4 overflow-hidden border border-white/10">
+        <div id="preloader-bar" class="h-full bg-gradient-to-r from-emerald-500 to-amber-300 w-0 transition-all duration-150"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR FLOTANTE -->
+  <header class="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-6xl">
+    <nav class="backdrop-blur-xl bg-[#0B0F17]/75 border border-white/10 rounded-2xl px-5 py-3.5 flex items-center justify-between shadow-2xl shadow-black/60">
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full overflow-hidden border border-emerald-400/50 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform flex items-center justify-center bg-black/50">
+          <img src="/favicon-fundacion.svg" alt="Faro de Luz" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="font-serif text-sm tracking-wider font-bold text-white block">VALLE DE LUZ</span>
+          <span id="header-live-clock" class="text-[10px] text-emerald-300 tracking-wider block font-mono flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="clock-display">--/--/---- --:--:--</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-5 text-xs font-medium text-slate-300">
+        <a href="#mision-vision" class="hover:text-emerald-300 transition-colors">Visión & Misión</a>
+        <a href="#ecosistema" class="hover:text-cyan-300 transition-colors">Ecosistema</a>
+        <a href="#ecotecnologia" class="hover:text-emerald-300 transition-colors">Ecotecnología</a>
+        <a href="#gobernanza" class="hover:text-emerald-300 transition-colors">Organigrama</a>
+        <a href="#regla-tiempo" class="hover:text-emerald-300 transition-colors">Regla 70/20/10</a>
+        <a href="#ubicacion" class="hover:text-emerald-300 transition-colors">Ubicación</a>
+        <a href="#galeria" class="hover:text-emerald-300 transition-colors">Galería</a>
+        <a href="#tablero-maestro" class="hover:text-cyan-300 transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          Tablero de Búnkeres
+        </a>
+        <a href="#formacion" class="hover:text-emerald-300 transition-colors">Centro de Formación</a>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <a href="bunker.html" class="px-3.5 py-2 text-xs font-mono font-semibold rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 shadow-md transition-all flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          ⚡ Búnker Live
+        </a>
+        <a href="#postulacion" class="px-4 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 shadow-md shadow-amber-500/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+          Sumarme / Contacto
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL DE SCROLLYTELLING -->
+  <main class="relative">
+    
+    <!-- CANVAS STICKY (FONDO DINÁMICO 240 FRAMES) -->
+    <div class="sticky top-0 h-screen w-full overflow-hidden z-0">
+      <canvas id="scrolly-canvas" class="w-full h-full object-cover block"></canvas>
+      <!-- Capas de contraste y viñeta -->
+      <div class="absolute inset-0 bg-gradient-to-t from-[#070A0F] via-transparent to-[#070A0F]/35 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-black/10 pointer-events-none"></div>
+    </div>
+
+    <!-- SECCIONES FLOTANTES ATADAS AL SCROLL -->
+    <div class="relative z-10 -mt-[100vh]">
+
+      <!-- ESCENA 1: HERO (0vh - 120vh) -->
+      <section id="hero" class="min-h-[120vh] flex flex-col items-center justify-center px-4 text-center">
+        <div class="max-w-4xl glass-card-fundacion rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl transition-all duration-500 transform hover:border-emerald-500/30">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono tracking-widest uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Acción Social Territorial · Valle de Traslasierra, Córdoba
+          </div>
+          <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase drop-shadow-xl mb-6">
+            Fundación<br><span class="bg-gradient-to-r from-emerald-200 via-emerald-400 to-amber-200 bg-clip-text text-transparent">Valle de Luz</span>
+          </h1>
+          <p class="text-base sm:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed drop-shadow">
+            "Sembrando esperanza y dignidad en los parajes de Traslasierra. El amor en acción uniendo la montaña con el valle.."
+          </p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-slate-300">
+            <span class="px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur">🏔️ 1 Hectárea con Agua</span>
+            <span class="px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur">👥 6 Parejas Fundadoras</span>
+            <span class="px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur">💻 100% Sustento ShopDigital</span>
+          </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 animate-bounce pointer-events-none">
+          <span class="text-[11px] font-mono tracking-widest uppercase">Deslizá para explorar la arquitectura</span>
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </div>
+      </section>
+
+      <!-- ESCENA NUEVA: VISIÓN Y MISIÓN DE LA COMUNIDAD (120vh - 250vh) -->
+      <section id="mision-vision" class="min-h-[140vh] flex flex-col items-center justify-center px-4 py-16">
+        <div class="max-w-5xl w-full space-y-6">
+          
+          <!-- Encabezado de Sección -->
+          <div class="text-center max-w-2xl mx-auto mb-2">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono tracking-widest uppercase mb-3">
+              🧭 Propósito Fundacional · Ecosistema 2027
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase drop-shadow-xl mb-2">
+              Nuestra Visión & Misión
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-xl mx-auto text-shadow-fundacion">
+              El fundamento que guía la convivencia, el trabajo y el desarrollo ecotecnológico en la montaña.
+            </p>
+          </div>
+
+          <!-- Grid de Visión y Misión -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Tarjeta 1: Visión -->
+            <div class="glass-card-fundacion rounded-3xl p-6 sm:p-8 shadow-2xl hover:border-amber-500/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-amber-500/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+                  🎯
+                </div>
+                <div class="inline-block px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono uppercase tracking-widest mb-3">
+                  Horizonte Estratégico 2027
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-white mb-3">Nuestra Visión</h3>
+                <p class="text-sm text-slate-100 leading-relaxed text-shadow-fundacion mb-4">
+                  Consolidarnos como un <strong>modelo pionero de comunidad de montaña autosustentable</strong> en Traslasierra, que demuestra que es posible alcanzar soberanía energética, hídrica y tecnológica viviendo en armonía comunitaria y propósito espiritual, sin depender de economías de subsistencia.
+                </p>
+              </div>
+              <ul class="text-xs text-slate-300 space-y-2 border-t border-white/10 pt-4">
+                <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> Faro de inspiración ecotecnológica para Córdoba y la región.</li>
+                <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> Blindaje legal colectivo bajo Fideicomiso Co-Housing ante IPJ.</li>
+              </ul>
+            </div>
+
+            <!-- Tarjeta 2: Misión -->
+            <div class="glass-card-fundacion rounded-3xl p-6 sm:p-8 shadow-2xl hover:border-cyan-500/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+                  🧭
+                </div>
+                <div class="inline-block px-2.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] font-mono uppercase tracking-widest mb-3">
+                  Vocación & Operación Diaria
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-white mb-3">Nuestra Misión</h3>
+                <p class="text-sm text-slate-100 leading-relaxed text-shadow-fundacion mb-4">
+                  Construir y preservar un hábitat ecotecnológico donde <strong>6 familias fundadoras</strong> desarrollan su máximo potencial técnico y espiritual, sustentadas por el trabajo remoto de alta productividad en <strong>ShopDigital</strong> (Regla 70/20/10), sirviendo a la comunidad con excelencia, fe y amor fraterno.
+                </p>
+              </div>
+              <ul class="text-xs text-slate-300 space-y-2 border-t border-white/10 pt-4">
+                <li class="flex items-center gap-2"><span class="text-cyan-400 font-bold">✓</span> 100% de sustento económico garantizado por servicios cloud e IA.</li>
+                <li class="flex items-center gap-2"><span class="text-cyan-400 font-bold">✓</span> Acción comunitaria activa a través de la Fundación y el Ministerio.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Banner Inferior de los 4 Pilares -->
+          <div class="glass-card-fundacion rounded-3xl p-5 sm:p-6 shadow-2xl">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 hover:border-amber-500/20 transition-all">
+                <div class="text-2xl mb-1.5">✝️</div>
+                <div class="font-bold text-white text-xs mb-0.5">Fe & Convivencia</div>
+                <div class="text-[10px] text-slate-400">Valores cristianos y fraternidad</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 hover:border-amber-500/20 transition-all">
+                <div class="text-2xl mb-1.5">⚡</div>
+                <div class="font-bold text-emerald-300 text-xs mb-0.5">Ecotecnología</div>
+                <div class="text-[10px] text-slate-400">Solar 18.4kW, Litio & Agua</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 hover:border-cyan-500/20 transition-all">
+                <div class="text-2xl mb-1.5">💻</div>
+                <div class="font-bold text-cyan-300 text-xs mb-0.5">ShopDigital</div>
+                <div class="text-[10px] text-slate-400">Motor de financiamiento 100%</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 hover:border-purple-500/20 transition-all">
+                <div class="text-2xl mb-1.5">🤝</div>
+                <div class="font-bold text-purple-300 text-xs mb-0.5">Acción Social</div>
+                <div class="text-[10px] text-slate-400">Fundación & Ministerio</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA NUEVA: ECOSISTEMA INTEGRADO (4 PILARES & ENLACES DE NAVEGACIÓN) -->
+      <section id="ecosistema" class="min-h-[140vh] flex flex-col items-center justify-center px-4 py-16">
+        <div class="max-w-6xl w-full space-y-8">
+          
+          <!-- Encabezado de Sección -->
+          <div class="text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono tracking-widest uppercase mb-3">
+              🌐 Arquitectura de 4 Pilares Independientes
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase drop-shadow-xl mb-3">
+              Nuestro Ecosistema Integrado
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-2xl mx-auto text-shadow-fundacion leading-relaxed">
+              Un modelo armónico donde la tecnología de alto rendimiento, la vida en la montaña, la acción social y la fe se potencian mutuamente. Conocé cada una de nuestras cuatro plataformas oficiales:
+            </p>
+          </div>
+
+          <!-- GRID DE LAS 4 PLATAFORMAS DEL ECOSISTEMA -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- 1. ShopDigital -->
+            <div class="glass-card-fundacion rounded-3xl p-6 shadow-2xl hover:border-cyan-400/50 transition-all group flex flex-col justify-between transform hover:scale-[1.02]">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    💻
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[9px] font-mono uppercase tracking-widest">
+                    Motor Económico
+                  </span>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-white mb-2">ShopDigital</h3>
+                <p class="text-xs text-slate-300 leading-relaxed text-shadow-fundacion mb-4">
+                  Empresa madre de software, desarrollo cloud, automatización e IA. Genera el 100% del sustento financiero de la comunidad (Regla 70/20/10).
+                </p>
+                <div class="text-[11px] font-mono text-cyan-300 space-y-1 mb-6 border-t border-white/10 pt-3">
+                  <div>⚡ Software & Cloud</div>
+                  <div>⚡ Sustento 100% Comunal</div>
+                </div>
+              </div>
+              <a href="https://shopdigital.ar" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-cyan-500/10 hover:bg-cyan-500 border border-cyan-500/30 text-cyan-300 hover:text-slate-950 font-semibold text-xs font-mono text-center transition-all flex items-center justify-center gap-2 shadow-md">
+                <span>Explorar ShopDigital</span>
+                <span>↗</span>
+              </a>
+            </div>
+
+            <!-- 2. Fundación Valle de Luz -->
+            <div class="glass-card-fundacion rounded-3xl p-6 shadow-2xl border-amber-500/40 hover:border-amber-400/60 transition-all group flex flex-col justify-between transform hover:scale-[1.02]">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🏔️
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono uppercase tracking-widest">
+                    Base Central
+                  </span>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-white mb-2">Faro de Luz</h3>
+                <p class="text-xs text-slate-300 leading-relaxed text-shadow-fundacion mb-4">
+                  Hábitat modular de montaña en Traslasierra, Córdoba. 6 viviendas en contenedores 40ft, Domo central, microrred solar y Co-Housing.
+                </p>
+                <div class="text-[11px] font-mono text-emerald-300 space-y-1 mb-6 border-t border-white/10 pt-3">
+                  <div>🏡 6 Familias Fundadoras</div>
+                  <div>🔋 Ecotecnología & Litio</div>
+                </div>
+              </div>
+              <a href="#hero" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500/10 hover:bg-amber-500 border border-emerald-500/30 text-emerald-300 hover:text-slate-950 font-semibold text-xs font-mono text-center transition-all flex items-center justify-center gap-2 shadow-md">
+                <span>Estás Aquí (Base)</span>
+                <span>✓</span>
+              </a>
+            </div>
+
+            <!-- 3. Fundación Valle de Luz -->
+            <div class="glass-card-fundacion rounded-3xl p-6 shadow-2xl hover:border-emerald-400/50 transition-all group flex flex-col justify-between transform hover:scale-[1.02]">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🤝
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono uppercase tracking-widest">
+                    Acción Social
+                  </span>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-white mb-2">Valle de Luz</h3>
+                <p class="text-xs text-slate-300 leading-relaxed text-shadow-fundacion mb-4">
+                  Brazo filantrópico y social. Asistencia a parajes rurales de Traslasierra, comedores y logística con flota Hilux 4x4 y Sprinter.
+                </p>
+                <div class="text-[11px] font-mono text-emerald-300 space-y-1 mb-6 border-t border-white/10 pt-3">
+                  <div>🚐 Logística Comunitaria</div>
+                  <div>🍲 Comedores y Apoyo Social</div>
+                </div>
+              </div>
+              <button onclick="alert('Fundación Valle de Luz: Próximamente plataforma oficial en vivo por la Agente Luz-03.')" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 text-emerald-300 hover:text-slate-950 font-semibold text-xs font-mono text-center transition-all flex items-center justify-center gap-2 shadow-md">
+                <span>Conocer Fundación</span>
+                <span>↗</span>
+              </button>
+            </div>
+
+            <!-- 4. Ministerio Caminos de Fe -->
+            <div class="glass-card-fundacion rounded-3xl p-6 shadow-2xl hover:border-purple-400/50 transition-all group flex flex-col justify-between transform hover:scale-[1.02]">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    ✝️
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[9px] font-mono uppercase tracking-widest">
+                    Culto & Fe
+                  </span>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-white mb-2">Caminos de Fe</h3>
+                <p class="text-xs text-slate-300 leading-relaxed text-shadow-fundacion mb-4">
+                  Centro de culto cristiano, discipulado de jóvenes, campañas espirituales, alabanza y formación pastoral en la montaña y parajes.
+                </p>
+                <div class="text-[11px] font-mono text-purple-300 space-y-1 mb-6 border-t border-white/10 pt-3">
+                  <div>📖 Cultos & Formación</div>
+                  <div>🎵 Sonido & Streaming Rider</div>
+                </div>
+              </div>
+              <button onclick="alert('Ministerio Caminos de Fe: Próximamente plataforma oficial en vivo por la Agente Luz-04.')" class="w-full py-2.5 px-4 rounded-xl bg-purple-500/10 hover:bg-purple-500 border border-purple-500/30 text-purple-300 hover:text-slate-950 font-semibold text-xs font-mono text-center transition-all flex items-center justify-center gap-2 shadow-md">
+                <span>Conocer Ministerio</span>
+                <span>↗</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Pie del Ecosistema -->
+          <div class="text-center pt-2 text-xs text-slate-400 font-mono">
+            <span>Soberanía Productiva + Vida Comunitaria + Solidaridad + Fe Cristiana</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA 2: ECOTECNOLOGÍA Y HÁBITAT MODULAR (120vh - 240vh) -->
+      <section id="ecotecnologia" class="min-h-[140vh] flex flex-col items-center justify-center px-4">
+        <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Tarjeta 1: Hábitat Modular -->
+          <div class="glass-card-fundacion rounded-3xl p-6 sm:p-7 shadow-2xl hover:border-amber-500/50 transition-all group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-amber-500/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+              🏡
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-white mb-2">Viviendas Modulares & Domo</h3>
+            <p class="text-sm text-slate-100 font-normal leading-relaxed mb-4 text-shadow-fundacion">
+              6 módulos habitacionales en contenedores marítimos 40ft High Cube dispuestos en herradura, montados sobre pilotes antisísmicos con aislamiento térmico de triple capa (poliuretano expandido y Durlock).
+            </p>
+            <ul class="text-xs text-slate-400 space-y-2 border-t border-white/10 pt-4">
+              <li class="flex items-center gap-2"><span class="text-amber-400">✓</span> Domo Geodésico Central (Frecuencia 4/5): Búnker de comando y servidores.</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400">✓</span> Resistencia climática a heladas severas y calores extremos.</li>
+            </ul>
+          </div>
+
+          <!-- Tarjeta 2: Red Solar & Sustento Digital -->
+          <div class="glass-card-fundacion rounded-3xl p-6 sm:p-7 shadow-2xl hover:border-cyan-500/50 transition-all group">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+              ⚡
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-white mb-2">Autosustentabilidad & Datos</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+              Generación fotovoltaica con inversores híbridos y almacenamiento en litio. Torre con cisterna elevada para distribución hídrica por gravedad. Sustento impulsado 100% por la empresa madre <strong class="text-cyan-300">ShopDigital</strong>.
+            </p>
+            <ul class="text-xs text-slate-400 space-y-2 border-t border-white/10 pt-4">
+              <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Conectividad satelital Starlink y búnker de servidores local.</li>
+              <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Autonomía total sin dependencia de agricultura de subsistencia.</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA 3: ORGANIGRAMA Y ÁREAS DE TRABAJO (240vh - 360vh) -->
+      <section id="gobernanza" class="min-h-[150vh] flex flex-col items-center justify-center px-4">
+        <div class="max-w-5xl w-full glass-card-fundacion rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl">
+          
+          <div class="text-center max-w-2xl mx-auto mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-amber-400 text-xs font-mono uppercase tracking-widest mb-3">
+              👑 Gobernanza de Célula de Confianza (12-13 Fundadores)
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-2">
+              Organigrama de Trabajo Interno
+            </h2>
+            <p class="text-xs text-slate-400">Liderado por Dirección General (Director Waly) con delegación modular por talentos.</p>
+          </div>
+
+          <!-- ÁREAS INTERNAS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-300 text-sm">🔋 1. Infraestructura & Ecotecnología</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono text-[10px]">2-3 Fundadores</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed">
+                Mantenimiento del banco de litio y paneles solares, prevención de congelamiento en cañerías, red satelital Starlink y refacción de contenedores.
+              </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-300 text-sm">🚐 2. Logística & Suministros</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono text-[10px]">2 Fundadores</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed">
+                Despensa del Domo con stock garantizado para 30 días, compras mayoristas en el pueblo, mantenimiento mecánico de Hilux 4x4 y Sprinter.
+              </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-300 text-sm">📊 3. Administración & Fideicomiso</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono text-[10px]">1-2 Fundadores</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed">
+                Gestión del fondo común de ShopDigital para servicios e insumos, pago de seguros/impuestos de la hectárea y rendición mensual de cuentas.
+              </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-emerald-300 text-sm">🧠 4. Formación & Convivencia</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 font-mono text-[10px]">2 Fundadores</span>
+              </div>
+              <p class="text-slate-300 leading-relaxed">
+                Preparación del Domo Central para aulas, mediación y salud emocional comunitaria, y aplicación del Reglamento Interno de Convivencia.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA 4: REGLA 70/20/10 Y BLINDAJE LEGAL (360vh - 480vh) -->
+      <section id="regla-tiempo" class="min-h-[150vh] flex flex-col items-center justify-center px-4">
+        <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Tarjeta: Regla de Oro 70/20/10 -->
+          <div class="glass-card-fundacion border-amber-500/35 rounded-3xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 text-[11px] font-mono uppercase tracking-widest mb-4">
+                ⏱️ Asignación de Tiempo
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-white mb-4">La Regla de Oro del Trabajo</h3>
+              
+              <div class="space-y-3 text-xs">
+                <div class="p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30">
+                  <div class="flex justify-between font-bold text-cyan-300 mb-1">
+                    <span>⚡ 70% — Desarrollo Digital</span>
+                    <span class="font-mono">ShopDigital</span>
+                  </div>
+                  <p class="text-slate-300">Software, IA, Cloud y soporte que provee el 100% del sustento económico.</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-amber-950/30 border border-emerald-500/30">
+                  <div class="flex justify-between font-bold text-emerald-300 mb-1">
+                    <span>🏡 20% — Mantenimiento Comunal</span>
+                    <span class="font-mono">Faro de Luz</span>
+                  </div>
+                  <p class="text-slate-300">Energía, red hídrica, logística, despensa y tareas del búnker.</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-purple-950/30 border border-purple-500/30">
+                  <div class="flex justify-between font-bold text-purple-300 mb-1">
+                    <span>🤝 10% — Servicio & Fe Externa</span>
+                    <span class="font-mono">Fundación / Min.</span>
+                  </div>
+                  <p class="text-slate-300">Apoyo a parajes vulnerables de Traslasierra y cultos de campaña.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta: Fideicomiso Co-Housing & Legalidad -->
+          <div id="legalidad" class="glass-card-fundacion rounded-3xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 text-[11px] font-mono uppercase tracking-widest mb-4">
+                📜 Blindaje Territorial
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-white mb-3">Fideicomiso Co-Housing (Córdoba)</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                Estructuración jurídica en la <strong>Provincia de Córdoba ante la IPJ</strong> (Código Civil y Comercial de la Nación, Arts. 193-224) para proteger la hectárea y las viviendas de forma colectiva y transparente.
+              </p>
+
+              <div class="space-y-2 text-xs text-slate-400 border-t border-white/10 pt-4">
+                <div class="flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span><strong>Fideicomiso de Administración:</strong> La tierra no es de un individuo; cada pareja posee el certificado de uso de su módulo.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span><strong>Reglamento de Convivencia:</strong> Estatuto privado vinculante firmado por los 13 fundadores.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span><strong>Plan de Acción Trienal:</strong> Certificado por Contador Público ante IPJ Córdoba.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA NUEVA: UBICACIÓN GEOGRÁFICA Y MAPA (#ubicacion) -->
+      <section id="ubicacion" class="min-h-[140vh] flex flex-col items-center justify-center px-4 py-16">
+        <div class="max-w-6xl w-full space-y-8">
+          
+          <!-- Encabezado de Ubicación -->
+          <div class="text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono tracking-widest uppercase mb-3">
+              📍 Enclave Territorial · Valle de Traslasierra
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase drop-shadow-xl mb-3">
+              Ubicación & Acceso a la Base
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-2xl mx-auto text-shadow-fundacion leading-relaxed">
+              Emplazados estratégicamente en un predio de <strong>1 hectárea con agua propia</strong> entre <strong>Panaholma y Villa Cura Brochero</strong>, combinando privacidad serrana, sustentabilidad y rápida conexión a centros urbanos.
+            </p>
+          </div>
+
+          <!-- GRID DE INFORMACIÓN Y MAPA -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- TARJETA 1: FICHA TERRITORIAL Y ACCESOS (5 Columnas) -->
+            <div class="lg:col-span-5 glass-card-fundacion rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between space-y-6">
+              <div>
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-2xl">
+                    🏔️
+                  </div>
+                  <div>
+                    <h3 class="font-serif text-xl font-bold text-white">Traslasierra, Córdoba</h3>
+                    <span class="text-xs text-emerald-300 font-mono">Dpto. San Alberto · Zona Serrana</span>
+                  </div>
+                </div>
+
+                <div class="space-y-3.5 text-xs text-slate-200 leading-relaxed text-shadow-fundacion">
+                  <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+                    <div class="font-bold text-emerald-300 flex items-center gap-2">
+                      <span>💧</span> 1 Hectárea con Provisión de Agua
+                    </div>
+                    <p class="text-slate-300 text-[11px]">Agua garantizada en el predio con almacenamiento en torre de 22.000 L para distribución por gravedad.</p>
+                  </div>
+
+                  <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+                    <div class="font-bold text-cyan-300 flex items-center gap-2">
+                      <span>🛣️</span> Corredor Panaholma — Cura Brochero
+                    </div>
+                    <p class="text-slate-300 text-[11px]">Acceso consolidado transitable todo el año para vehículos particulares y flota comunal Hilux 4x4 / Sprinter.</p>
+                  </div>
+
+                  <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+                    <div class="font-bold text-emerald-300 flex items-center gap-2">
+                      <span>⏱️</span> Tiempos de Conexión Clave
+                    </div>
+                    <ul class="text-[11px] text-slate-300 space-y-1 pt-1">
+                      <li>• <strong>A Panaholma:</strong> 8-10 min (Río de aguas templadas y naturaleza).</li>
+                      <li>• <strong>A Villa Cura Brochero / Mina Clavero:</strong> 15 min (Hospital regional, comercios y servicios).</li>
+                      <li>• <strong>A Córdoba Capital:</strong> 2.5 hs (Por el Camino de las Altas Cumbres).</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <span>Coordenadas: Traslasierra</span>
+                <span class="text-emerald-400">● Zona Segura Co-Housing</span>
+              </div>
+            </div>
+
+            <!-- TARJETA 2: MAPA INTERACTIVO GLASSMORPHIC (7 Columnas) -->
+            <div class="lg:col-span-7 glass-card-fundacion rounded-3xl p-3 sm:p-4 shadow-2xl flex flex-col justify-between relative overflow-hidden min-h-[420px]">
+              
+              <!-- Badge Flotante de Ubicación -->
+              <div class="absolute top-6 left-6 z-20 px-3.5 py-2 rounded-2xl bg-slate-950/85 backdrop-blur-md border border-amber-500/40 text-white font-mono text-xs shadow-2xl flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>📍 <strong>Fundación Valle de Luz</strong> (Traslasierra)</span>
+              </div>
+
+              <!-- Iframe de Google Maps -->
+              <div class="w-full h-full min-h-[360px] rounded-2xl overflow-hidden border border-white/10 relative">
+                <iframe 
+                  src="https://maps.google.com/maps?q=Panaholma,+Cordoba,+Argentina&t=k&z=12&ie=UTF8&iwloc=&output=embed" 
+                  class="w-full h-full min-h-[360px] border-0 filter contrast-125 opacity-90 hover:opacity-100 transition-opacity" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+
+              <!-- Barra Inferior de Navegación Externa -->
+              <div class="pt-3 px-2 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <span class="text-slate-400 text-[11px] font-mono">Vista Satelital / Topográfica de Traslasierra</span>
+                <a 
+                  href="https://maps.google.com/?q=Panaholma,+Cordoba,+Argentina" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="px-4 py-2 rounded-xl bg-emerald-500/10 hover:bg-amber-500 border border-emerald-500/30 text-emerald-300 hover:text-slate-950 font-mono font-semibold text-xs transition-all flex items-center gap-1.5 shadow-md">
+                  <span>Abrir en Google Maps</span>
+                  <span>↗</span>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA NUEVA: GALERÍA MULTIMEDIA Y AVANCES DE OBRA (#galeria) -->
+      <section id="galeria" class="min-h-[140vh] flex flex-col items-center justify-center px-4 py-16">
+        <div class="max-w-6xl w-full space-y-8">
+          
+          <!-- Encabezado de Galería -->
+          <div class="text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono tracking-widest uppercase mb-3">
+              📸 Registros Audiovisuales · Traslasierra 2027
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase drop-shadow-xl mb-3">
+              Galería de Misiones & Acción Social
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-2xl mx-auto text-shadow-fundacion leading-relaxed">
+              Explorá los registros de los operativos en parajes, comedores comunitarios, talleres de oficios y logística con la flota 4x4. Los registros se administran y actualizan en tiempo real desde el Búnker.
+            </p>
+          </div>
+
+          <!-- BOTONES DE FILTRO -->
+          <div class="flex flex-wrap items-center justify-center gap-2.5">
+            <button class="galeria-filter-btn active px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-emerald-500 text-slate-950 shadow-md transition-all" data-category="todos">
+              Todos
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="Acción Social & Parajes">
+              🤝 Acción Social & Parajes
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="Comedores Comunitarios">
+              🍲 Comedores Comunitarios
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="Logística Hilux 4x4">
+              🚐 Logística Hilux 4x4
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="Voluntariado & Donaciones">
+              ❤️ Voluntariado & Donaciones
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="Dron & Territorio">
+              🦅 Dron & Territorio
+            </button>
+            <button class="galeria-filter-btn px-4 py-2 rounded-xl text-xs font-mono text-slate-300 glass-card-fundacion hover:border-emerald-400/50 hover:text-white transition-all" data-category="video">
+              🎬 Videos
+            </button>
+          </div>
+
+          <!-- GRILLA DINÁMICA DE LA GALERÍA -->
+          <div id="galeria-public-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Renderizado dinámicamente desde Supabase por scrollytelling.js -->
+          </div>
+
+          <!-- Pie informativo -->
+          <div class="text-center pt-2 text-xs text-slate-400 font-mono">
+            <span>Sincronización en vivo con Supabase Cloud y Búnker Táctico</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MODAL LIGHTBOX PARA FOTOS Y VIDEOS -->
+      <div id="galeria-lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+        <div class="relative max-w-4xl w-full bg-[#080C14] border border-amber-500/40 rounded-3xl overflow-hidden shadow-2xl">
+          <button id="btn-close-lightbox" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-red-500 text-white flex items-center justify-center transition-all border border-white/20">
+            ✕
+          </button>
+          <div id="lightbox-content" class="w-full flex flex-col items-center justify-center min-h-[300px] max-h-[80vh]">
+            <!-- Contenido dinámico (Img o Iframe de video) -->
+          </div>
+          <div class="p-5 bg-slate-950/90 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div>
+              <h4 id="lightbox-title" class="font-bold text-white text-base">Título del medio</h4>
+              <p id="lightbox-desc" class="text-xs text-slate-400">Descripción</p>
+            </div>
+            <span id="lightbox-badge" class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px] uppercase">
+              Foto
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCENA 5: TABLERO MAESTRO DE BÚNKERES (480vh - 620vh) -->
+      <section id="tablero-maestro" class="min-h-[160vh] flex flex-col items-center justify-center px-4 py-16">
+        <div class="max-w-6xl w-full glass-card-fundacion border-cyan-500/35 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl shadow-black/90">
+          
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-widest mb-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                Centro de Comando & Agentes
+              </div>
+              <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">
+                Tablero Maestro de Búnkeres
+              </h2>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+                ● Telemetría: ONLINE
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs">
+                Backend: Supabase Active
+              </span>
+            </div>
+          </div>
+
+          <!-- GRID DE LOS 5 BÚNKERES OPERATIVOS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <!-- Búnker 1: Automatización & Agente -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-cyan-500/25 hover:bg-black/35 hover:border-cyan-400/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-2xl">🤖</span>
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-200 text-[10px] font-mono uppercase">Agente Activo</span>
+                </div>
+                <h4 class="font-bold text-white text-base mb-1">Búnker 1: Automatización & Chat</h4>
+                <p class="text-xs text-slate-400 mb-4">Respuestas automáticas a aspirantes, triage con IA de mensajes y derivación a coordinadores.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-cyan-300 flex items-center justify-between">
+                <span>Mensajes atendidos hoy:</span>
+                <strong class="text-white">18</strong>
+              </div>
+            </div>
+
+            <!-- Búnker 2: Ecotecnología & Telemetría -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-amber-500/25 hover:bg-black/35 hover:border-amber-400/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-2xl">🔋</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">Telemetría IoT</span>
+                </div>
+                <h4 class="font-bold text-white text-base mb-1">Búnker 2: Ecotecnología</h4>
+                <p class="text-xs text-slate-400 mb-4">Monitoreo de microrred fotovoltaica, banco de litio, cisterna en torre y Starlink.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-2 font-mono text-[10px]">
+                <div class="p-2 rounded-lg bg-slate-900 text-emerald-200">Litio: <strong>94%</strong></div>
+                <div class="p-2 rounded-lg bg-slate-900 text-emerald-200">Agua: <strong>88%</strong></div>
+              </div>
+            </div>
+
+            <!-- Búnker 3: Finanzas & Fideicomiso -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-emerald-500/25 hover:bg-black/35 hover:border-emerald-400/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-2xl">📊</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">Fideicomiso</span>
+                </div>
+                <h4 class="font-bold text-white text-base mb-1">Búnker 3: Contabilidad</h4>
+                <p class="text-xs text-slate-400 mb-4">Administración del fondo común provisto por ShopDigital y pagos de la hectárea.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-emerald-300 flex items-center justify-between">
+                <span>Estado fondo común:</span>
+                <strong class="text-white">SUPERÁVIT</strong>
+              </div>
+            </div>
+
+            <!-- Búnker 4: Difusión & Convocatoria -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-purple-500/25 hover:bg-black/35 hover:border-purple-400/50 transition-all group flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-2xl">📢</span>
+                  <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-200 text-[10px] font-mono uppercase">Convocatoria</span>
+                </div>
+                <h4 class="font-bold text-white text-base mb-1">Búnker 4: Marketing & Talento</h4>
+                <p class="text-xs text-slate-400 mb-4">Control de postulantes recibidos, perfiles técnicos y selección de las 6 parejas fundadoras.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-purple-300 flex items-center justify-between">
+                <span>Postulaciones activas:</span>
+                <strong class="text-white">12 perfiles</strong>
+              </div>
+            </div>
+
+            <!-- Búnker 5: SecOps & Roles -->
+            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-red-500/25 hover:bg-black/35 hover:border-red-400/50 transition-all group flex flex-col justify-between md:col-span-2">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-2xl">🛡️</span>
+                  <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-200 text-[10px] font-mono uppercase">SecOps & Credenciales</span>
+                </div>
+                <h4 class="font-bold text-white text-base mb-1">Búnker 5: Seguridad & Control de Accesos</h4>
+                <p class="text-xs text-slate-400 mb-4">Gestión segura de credenciales Supabase / Vercel / GitHub y llaves criptográficas de los fundadores.</p>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
+                <span class="text-emerald-400">✓ RLS Active</span>
+                <span class="text-emerald-400">✓ DNS DonWeb Verified</span>
+                <span class="text-emerald-400">✓ GitHub CI/CD Connected</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ESCENA: EMBUDO DE SUSCRIPCIÓN, CONTACTO Y COMUNIDAD (#comunidad) -->
+      <section id="formacion" class="min-h-[160vh] flex flex-col items-center justify-center px-4 py-20">
+        <div id="postulacion" class="max-w-5xl w-full glass-card-fundacion border-amber-500/35 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl shadow-black/80 space-y-8">
+          
+          <!-- Encabezado del Embudo -->
+          <div class="text-center max-w-3xl mx-auto space-y-3">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono uppercase tracking-widest">
+              ✨ Sé Parte del Ecosistema · Suscripción & Conexión
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white uppercase drop-shadow-xl">
+              Sumate a la Fundación Valle de Luz
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-200 font-light max-w-2xl mx-auto text-shadow-fundacion leading-relaxed">
+              Te invitamos a conectarte con nuestra visión. Al suscribirte recibirás tu <strong>Credencial Digital de la Comunidad</strong>, noticias exclusivas de nuestros proyectos, reportes de la base de montaña y una línea de contacto directa con el equipo de coordinación y el Director Waly.
+            </p>
+          </div>
+
+          <!-- BANNER DE BENEFICIOS DEL MIEMBRO / SUSCRIPTOR -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+            <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+              <div class="text-2xl">🪪</div>
+              <div class="font-bold text-white text-xs">Credencial Digital</div>
+              <div class="text-[10px] text-slate-400">ID oficial de miembro o amigo</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+              <div class="text-2xl">📩</div>
+              <div class="font-bold text-emerald-300 text-xs">Bitácora & Avances</div>
+              <div class="text-[10px] text-slate-400">Noticias de obras y proyectos</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+              <div class="text-2xl">💬</div>
+              <div class="font-bold text-cyan-300 text-xs">Línea Directa</div>
+              <div class="text-[10px] text-slate-400">Canal prioritario por WhatsApp</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 space-y-1">
+              <div class="text-2xl">👑</div>
+              <div class="font-bold text-purple-300 text-xs">Fundadores</div>
+              <div class="text-[10px] text-slate-400">Postulación a las 6 parejas</div>
+            </div>
+          </div>
+
+          <!-- FORMULARIO DE CONTACTO Y SUSCRIPCIÓN -->
+          <form id="talent-form" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Nombre y Apellido / Matrimonio *</label>
+                <input type="text" id="form-nombre" required placeholder="Ej: Waly y Andrea Miranda" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Modalidad de Interés / Conexión *</label>
+                <select id="form-modalidad" required class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all">
+                  <option value="Aspirante a Pareja Fundadora">👑 Aspirante a Pareja Fundadora (Base Traslasierra)</option>
+                  <option value="Miembro Adherente / Voluntario">🤝 Miembro Adherente / Voluntario Comunitario</option>
+                  <option value="Talento Tech ShopDigital">💻 Talento Tecnológico / Desarrollador ShopDigital</option>
+                  <option value="Suscriptor Amigo de la Comunidad">📩 Suscriptor Amigo / Noticias y Oración</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">WhatsApp / Teléfono Móvil *</label>
+                <input type="tel" id="form-telefono" required placeholder="+54 9 11 ..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Correo Electrónico *</label>
+                <input type="email" id="form-email" required placeholder="correo@ejemplo.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Ciudad / Provincia *</label>
+                <input type="text" id="form-ciudad" required placeholder="Ej: Córdoba / Buenos Aires" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Área de Afinidad / Talento Principal *</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/70 border border-white/10 hover:border-cyan-400/40 cursor-pointer transition-all">
+                  <input type="radio" name="talento" value="software" checked class="text-cyan-500 focus:ring-cyan-400">
+                  <span>💻 <strong>Software & IA:</strong> Desarrollo Cloud en ShopDigital</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/70 border border-white/10 hover:border-emerald-400/50 cursor-pointer transition-all">
+                  <input type="radio" name="talento" value="infraestructura" class="text-amber-500 focus:ring-amber-400">
+                  <span>🔋 <strong>Infraestructura:</strong> Solar, litio, agua y bioconstrucción</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/70 border border-white/10 hover:border-emerald-400/40 cursor-pointer transition-all">
+                  <input type="radio" name="talento" value="logistica" class="text-emerald-500 focus:ring-emerald-400">
+                  <span>🚐 <strong>Logística & Acción Social:</strong> Fundación y comunidad</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/70 border border-white/10 hover:border-purple-400/40 cursor-pointer transition-all">
+                  <input type="radio" name="talento" value="administracion" class="text-purple-500 focus:ring-purple-400">
+                  <span>📊 <strong>Administración & Fe:</strong> Gestión legal, culto y convivencia</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Mensaje / Motivación *</label>
+              <textarea id="form-mensaje" rows="3" required placeholder="Contanos brevemente qué te motiva a sumarte, tu experiencia previa o cómo te gustaría participar en Faro de Luz..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all resize-none"></textarea>
+            </div>
+
+            <div class="text-center pt-2">
+              <button type="submit" class="w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-sm shadow-xl shadow-amber-500/25 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mx-auto">
+                <span>Sumarme a la Comunidad & Recibir Credencial</span>
+                <span>🚀</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- TARJETA VISUAL DE CONFIRMACIÓN Y CREDENCIAL DIGITAL -->
+          <div id="credential-success-card" class="hidden space-y-6 pt-4 border-t border-white/10 animate-fade-in">
+            <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0B1424] via-[#0E1A2D] to-[#0A0F1A] border-2 border-amber-400/50 shadow-2xl relative overflow-hidden">
+              
+              <!-- Glow decorativo -->
+              <div class="absolute -top-24 -right-24 w-60 h-60 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-full overflow-hidden border border-amber-400/60 shadow-lg flex items-center justify-center bg-black/60">
+                    <img src="/favicon-fundacion.svg" alt="Faro de Luz" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <div class="font-serif font-bold text-white text-base tracking-wider">COMUNIDAD VALLE DE LUZ</div>
+                    <div class="text-[10px] text-emerald-300 font-mono uppercase tracking-widest">Credencial Digital de Suscripción</div>
+                  </div>
+                </div>
+                <div class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs border border-emerald-500/30">
+                  ● REGISTRO CONFIRMADO
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 py-6 items-center text-xs">
+                <div>
+                  <span class="text-slate-400 block text-[10px] uppercase font-mono mb-1">Nombre / Titular:</span>
+                  <strong id="cred-name" class="text-white text-base font-serif">Titular</strong>
+                </div>
+                <div>
+                  <span class="text-slate-400 block text-[10px] uppercase font-mono mb-1">Modalidad:</span>
+                  <span id="cred-modalidad" class="text-emerald-300 font-bold">Modalidad</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block text-[10px] uppercase font-mono mb-1">Código de Credencial:</span>
+                  <span id="cred-id" class="text-cyan-300 font-mono font-bold text-sm">VL-2027-0000</span>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-black/40 border border-white/10 text-xs text-slate-200 leading-relaxed space-y-2">
+                <p>
+                  🎉 <strong>¡Felicitaciones y bienvenido a la Fundación Valle de Luz!</strong> Tus datos ingresaron de forma segura al Búnker Central de Coordinación.
+                </p>
+                <p class="text-slate-400 text-[11px]">
+                  El Director Waly y el equipo de coordinación se pondrán en contacto con vos vía WhatsApp para enviarte tu credencial formal, sumarte a la bitácora de novedades y coordinar los próximos pasos.
+                </p>
+              </div>
+
+              <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-[11px] text-slate-400 font-mono">Búnker Central · Traslasierra, Córdoba</span>
+                <a id="btn-whatsapp-direct" href="https://wa.me/5491100000000" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                  <span>Hablar con el Director Waly en WhatsApp</span>
+                  <span>💬</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER INSTITUCIONAL -->
+  <footer class="relative z-20 bg-[#05070A] border-t border-white/10 py-12 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full overflow-hidden border border-emerald-400/50 flex items-center justify-center bg-black/50 shadow-md">
+          <img src="/favicon-fundacion.svg" alt="Faro de Luz" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <div class="text-white font-semibold font-serif">COMUNIDAD VALLE DE LUZ</div>
+          <div class="text-[10px] text-slate-500">Valle de Traslasierra, Córdoba, Argentina</div>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-6">
+        <span>Sustentado por <strong class="text-white">ShopDigital</strong></span>
+        <span>·</span>
+        <span>Fideicomiso Inmobiliario de Co-Housing</span>
+        <span>·</span>
+        <span>IPJ Córdoba</span>
+      </div>
+      <div class="text-[11px] text-slate-500">
+        © 2026-2027 Comunidad Ecotecnológica Faro de Luz.
+      </div>
+    </div>
+  </footer>
+
+  <!-- WIDGET FLOTANTE DE ATENCIÓN: ASISTENTE LUZ-02 -->
+  <div id="luz-assistant-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    
+    <!-- VENTANA DE CHAT DEL ASISTENTE -->
+    <div id="luz-chat-window" class="hidden mb-3 w-[92vw] max-w-[380px] sm:w-[380px] bg-[#0B101A]/95 backdrop-blur-2xl border border-emerald-500/30 rounded-3xl shadow-2xl shadow-black/90 flex flex-col overflow-hidden transition-all duration-300 transform scale-95 opacity-0 origin-bottom-right">
+      
+      <!-- HEADER DEL CHAT -->
+      <div class="bg-gradient-to-r from-[#0F172A] to-[#1E1B18] p-4 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-serif font-bold text-sm shadow-md shadow-amber-500/20">
+              L-03
+            </div>
+            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B101A] animate-pulse"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="font-serif text-sm font-bold text-white">Asistente Luz-03</h4>
+              <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[9px]">EN LÍNEA</span>
+            </div>
+            <p class="text-[10px] text-slate-400">Ingeniería & Atención a la Comunidad</p>
+          </div>
+        </div>
+        <button id="btn-close-luz-chat" class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- CUERPO DE MENSAJES -->
+      <div id="luz-chat-body" class="p-4 overflow-y-auto max-h-[340px] space-y-3 text-xs leading-relaxed">
+        <div class="flex gap-2.5 items-start">
+          <div class="w-6 h-6 rounded-lg bg-emerald-500/20 border border-amber-500/40 text-emerald-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+            L
+          </div>
+          <div class="p-3 rounded-2xl rounded-tl-sm bg-white/5 border border-white/5 text-slate-200">
+            ¡Hola! Soy <strong>Luz-03</strong>, la ingeniera asistente de la Fundación Valle de Luz. ¿En qué puedo orientarte hoy?
+          </div>
+        </div>
+
+        <!-- SUGERENCIAS RÁPIDAS -->
+        <div class="space-y-1.5 pt-1">
+          <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Consultas Rápidas:</div>
+          <div class="flex flex-col gap-1.5">
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-amber-500/20 text-emerald-200 transition-all text-left">
+              📍 ¿Dónde está ubicada la Comunidad en Traslasierra?
+            </button>
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-200 transition-all text-left">
+              🌐 ¿Cómo está formado el Ecosistema de 4 Pilares?
+            </button>
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-amber-500/20 text-emerald-200 transition-all text-left">
+              🧭 ¿Cuál es la Visión y Misión de la Comunidad?
+            </button>
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-amber-500/20 text-emerald-200 transition-all text-left">
+              🏡 ¿Cómo son las viviendas modulares de montaña?
+            </button>
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-200 transition-all text-left">
+              ⚡ ¿Cómo es el sustento financiero con ShopDigital?
+            </button>
+            <button class="luz-quick-chip text-[11px] px-2.5 py-1.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 text-purple-200 transition-all text-left">
+              👥 ¿Cómo es la selección de las 6 parejas fundadoras?
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- INPUT Y ENVIAR -->
+      <form id="luz-chat-form" class="p-3 bg-[#080C14] border-t border-white/10 flex items-center gap-2">
+        <input type="text" id="luz-chat-input" placeholder="Escribí tu consulta a Luz-03..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400 transition-all">
+        <button type="submit" class="w-9 h-9 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 flex items-center justify-center shadow-md shadow-amber-500/20 transition-all transform hover:scale-105 active:scale-95 shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        </button>
+      </form>
+
+    </div>
+
+    <!-- BOTÓN DISPARADOR FLOTANTE -->
+    <button id="btn-toggle-luz-chat" class="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E1B18] hover:from-[#1E293B] hover:to-[#2A241F] border border-amber-500/40 shadow-2xl shadow-black/80 transition-all transform hover:scale-105 active:scale-95">
+      <div class="relative">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-serif font-bold text-xs shadow-md shadow-amber-500/20">
+          L-03
+        </div>
+        <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      </div>
+      <div class="text-left hidden sm:block">
+        <div class="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors">Asistente Luz-03</div>
+        <div class="text-[10px] text-slate-400">Atención a la Comunidad</div>
+      </div>
+    </button>
+
+  </div>
+
+  <!-- SCRIPT DE SCROLLYTELLING Y CONTROL -->
+  <script src="src/scrollytelling.js"></script>
+</body>
+</html>

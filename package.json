@@ -1,1 +1,10 @@
-﻿{"name":"fundacion-valle-de-luz","version":"1.0.0","description":"Portal Institucional Fundacion Valle de Luz","private":true}
+﻿{
+  "name": "fundacion-valle-de-luz",
+  "version": "1.0.0",
+  "description": "Portal Institucional Fundacion Valle de Luz",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.4",
+    "@travisvn/edge-tts": "^1.0.2"
+  }
+}
