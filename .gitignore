@@ -1,0 +1,10 @@
+﻿node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.system_generated/
+build_*.js
+update_*.js
+extract_frames.js
+.env
+.env.local

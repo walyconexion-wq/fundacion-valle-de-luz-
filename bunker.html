@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Favicon Pestaña -->
+  <link rel="icon" type="image/svg+xml" href="/favicon-fundacion.svg" />
+  <link rel="apple-touch-icon" href="/og-fundacion.jpg" />
+
+  <!-- Google Brand Card & WhatsApp / Facebook Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://valledeluz.dpdns.org/bunker.html" />
+  <meta property="og:title" content="Búnker Táctico — Fundación Valle de Luz" />
+  <meta property="og:description" content="Centro de Comando y Logística Social en Traslasierra, Córdoba." />
+  <meta property="og:image" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <meta property="og:image:secure_url" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Búnker Fundación Valle de Luz" />
+  <meta property="og:site_name" content="Fundación Valle de Luz" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Búnker Táctico — Fundación Valle de Luz" />
+  <meta name="twitter:description" content="Centro de Comando y Logística Social en Traslasierra, Córdoba." />
+  <meta name="twitter:image" content="https://valledeluz.dpdns.org/og-fundacion-card.png" />
+  <title>Búnker Táctico — Fundación Valle de Luz (Acceso Restringido)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            serif: ['Cinzel', 'serif']
+          },
+          colors: {
+            bunker: {
+              bg: '#06090E',
+              card: '#0D131D',
+              border: '#1E293B',
+              accent: '#06B6D4',
+              gold: '#E5C07B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-bunker-bg text-slate-100 font-sans min-h-screen selection:bg-emerald-500/30 selection:text-emerald-200 overflow-x-hidden">
+
+  <!-- 1. PASARELA DE AUTENTICACIÓN (LOGIN MODAL / GATEWAY) -->
+  <div id="auth-gateway" class="fixed inset-0 z-50 bg-[#06090E]/95 backdrop-blur-2xl flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-[#0D131D] border border-emerald-500/30 rounded-3xl p-8 shadow-2xl shadow-emerald-950/50 text-center relative overflow-hidden">
+      
+      <!-- Glow superior -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5 shadow-lg shadow-emerald-500/10">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 font-mono text-[10px] uppercase tracking-widest mb-3">
+        🔒 Acceso Privado · Consejo y Logística
+      </div>
+
+      <h2 class="font-serif text-2xl font-bold text-white mb-2">Búnker Valle de Luz</h2>
+      <p class="text-xs text-slate-400 mb-6 leading-relaxed">
+        Área restringida para la Dirección General (Director Waly) y el Consejo de Administración y el equipo de Logística Social.
+      </p>
+
+      <div class="space-y-3">
+        <!-- Botón de Login con Google -->
+        <button id="btn-login-google" class="w-full py-3.5 px-4 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-semibold text-xs flex items-center justify-center gap-3 shadow-lg transition-all transform hover:scale-[1.01] active:scale-[0.99]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3 0-.8.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2c0 2.8.7 5.5 1.9 7.8l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.2 7.5 23.5 12 23.5z"/></svg>
+          <span>Continuar con Google (Supabase Auth)</span>
+        </button>
+
+        <!-- Modo Simulación de Fundador (Demo Rápida) -->
+        <button id="btn-login-demo" class="w-full py-3 px-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-white/10 text-emerald-300 font-mono text-xs flex items-center justify-center gap-2 transition-all">
+          <span>⚡ Entrar como Director Waly (Simulación)</span>
+        </button>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+        <a href="index.html" class="hover:text-slate-300 transition-colors">← Volver a Web Pública</a>
+        <span>IPJ Córdoba · RLS Active</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. APLICACIÓN PRINCIPAL DEL BÚNKER (DASHBOARD TÁCTICO) -->
+  <div id="bunker-app" class="min-h-screen flex flex-col hidden">
+
+    <!-- HEADER SUPERIOR DEL BÚNKER -->
+    <header class="bg-[#0A0E17] border-b border-bunker-border px-6 py-3.5 flex items-center justify-between sticky top-0 z-30">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full overflow-hidden border border-emerald-500/40 flex items-center justify-center bg-black/50 shadow-md">
+            <img src="/favicon-fundacion.svg" alt="Valle de Luz" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-serif text-sm font-bold text-white tracking-wider flex items-center gap-2">
+              BÚNKER VALLE DE LUZ
+              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">v2.4 ONLINE</span>
+            </div>
+            <div class="text-[10px] text-slate-400 font-mono">Valle de Traslasierra · Nodo Central 01</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADOS RÁPIDOS Y PERFIL -->
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-4 text-xs font-mono text-slate-400">
+          <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Litio: 94%</span>
+          <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Starlink: 185 Mbps</span>
+          <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Cisterna: 88%</span>
+        </div>
+
+        <div class="flex items-center gap-3 pl-4 border-l border-white/10">
+          <div class="text-right hidden sm:block">
+            <div id="user-name" class="text-xs font-bold text-white">Director Waly</div>
+            <div class="text-[10px] text-emerald-400 font-mono">Director General Omega</div>
+          </div>
+          <button id="btn-logout" class="p-2 rounded-lg bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-300 border border-white/10 transition-all" title="Cerrar Sesión">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </button>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-white/10 transition-all">
+            Web Pública ↗
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- CUERPO DEL BÚNKER: SIDEBAR + VISTAS -->
+    <div class="flex-1 flex flex-col md:flex-row">
+
+      <!-- SIDEBAR DE NAVEGACIÓN -->
+      <aside class="w-full md:w-64 bg-[#080C14] border-r border-bunker-border p-4 flex flex-col justify-between">
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-mono uppercase tracking-widest text-slate-500 px-3 py-2">Módulos Tácticos</div>
+          
+          <button data-tab="tab-agentes" class="bunker-tab-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left">
+            <span class="text-base">🤖</span>
+            <span>1. Agentes & Triage</span>
+          </button>
+
+          <button data-tab="tab-telemetria" class="bunker-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left">
+            <span class="text-base">🔋</span>
+            <span>2. Ecotecnología IoT</span>
+          </button>
+
+          <button data-tab="tab-fideicomiso" class="bunker-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left">
+            <span class="text-base">📊</span>
+            <span>3. Fideicomiso & Caja</span>
+          </button>
+
+          <button data-tab="tab-postulantes" class="bunker-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left flex justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-base">👥</span>
+              <span>4. Comunidad & Suscripciones</span>
+            </div>
+            <span id="badge-postulantes-count" class="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">3</span>
+          </button>
+
+          <button <button data-tab="tab-galeria" class="bunker-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left flex justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-base">📸</span>
+              <span>6. Galería & Multimedia</span>
+            </div>
+            <span id="badge-galeria-count" class="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">0</span>
+          </button>
+
+          <button data-tab="tab-secops" class="bunker-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/5 transition-all text-left">
+            <span class="text-base">🛡️</span>
+            <span>5. SecOps & Auditoría</span>
+          </button>
+        </div>
+
+        <div class="pt-4 border-t border-white/5 text-[11px] font-mono text-slate-500 space-y-1 px-2">
+          <div>Backend: Supabase RLS</div>
+          <div>Sustento: ShopDigital ⚡</div>
+        </div>
+      </aside>
+
+      <!-- ÁREA DE CONTENIDO DINÁMICO -->
+      <main class="flex-1 bg-bunker-bg p-6 overflow-y-auto max-h-[calc(100vh-61px)]">
+
+        <!-- TAB 1: AGENTES & TRIAGE (CHAT EN VIVO) -->
+        <div id="tab-agentes" class="bunker-view space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>🤖</span> Búnker de Automatización & Agentes de IA
+              </h3>
+              <p class="text-xs text-slate-400">Agente de Triage y Respuestas Inteligentes para la Fundación Valle de Luz.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+              Modelo: Gemini 3.7 Flash High
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Consola de Chat -->
+            <div class="lg:col-span-2 bg-bunker-card border border-bunker-border rounded-2xl p-4 flex flex-col h-[500px]">
+              <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 p-2 font-mono text-xs">
+                <div class="flex gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                  <div class="font-bold text-emerald-400">[Luz-03]:</div>
+                  <div class="text-slate-200">Búnker central sincronizado. Todos los sistemas de telemetría, aspirantes y finanzas del Fideicomiso están activos. ¿Qué orden desea ejecutar, Director?</div>
+                </div>
+              </div>
+              
+              <form id="chat-form" class="mt-3 pt-3 border-t border-white/10 flex gap-2">
+                <input type="text" id="chat-input" placeholder="Escribí una orden o consulta para el agente..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 text-xs font-mono focus:outline-none focus:border-emerald-400">
+                <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition-all">
+                  Enviar
+                </button>
+              </form>
+            </div>
+
+            <!-- Panel de Tareas Automatizadas -->
+            <div class="space-y-4">
+              <div class="bg-bunker-card border border-bunker-border rounded-2xl p-5">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3">Automatizaciones Activas</h4>
+                <div class="space-y-2.5 text-xs">
+                  <div class="p-2.5 rounded-xl bg-slate-900/80 border border-white/5 flex items-center justify-between">
+                    <span>Triage de postulaciones web</span>
+                    <span class="text-emerald-400 font-mono text-[10px]">ACTIVO</span>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-slate-900/80 border border-white/5 flex items-center justify-between">
+                    <span>Alerta heladas en cañerías</span>
+                    <span class="text-emerald-400 font-mono text-[10px]">ACTIVO</span>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-slate-900/80 border border-white/5 flex items-center justify-between">
+                    <span>Sincronización Supabase Vault</span>
+                    <span class="text-emerald-400 font-mono text-[10px]">ACTIVO</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: ECOTECNOLOGÍA & TELEMETRÍA IOT -->
+        <div id="tab-telemetria" class="bunker-view hidden space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>🔋</span> Telemetría de Infraestructura & Ecotecnología
+              </h3>
+              <p class="text-xs text-slate-400">Sensores en tiempo real de la base en la montaña.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+              Sensores: 100% Calibrados
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Banco de Baterías Litio</div>
+              <div class="text-3xl font-bold text-amber-400 font-mono">94.2 %</div>
+              <div class="text-[11px] text-emerald-400 mt-2 font-mono">Carga óptima · 48V</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Generación Solar Actual</div>
+              <div class="text-3xl font-bold text-emerald-400 font-mono">18.4 kW</div>
+              <div class="text-[11px] text-slate-400 mt-2 font-mono">Paneles en 6 Contenedores</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Cisterna en Torre Elevada</div>
+              <div class="text-3xl font-bold text-blue-400 font-mono">88.0 %</div>
+              <div class="text-[11px] text-slate-400 mt-2 font-mono">22.000 Litros de Reserva</div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Enlace Satelital Starlink</div>
+              <div class="text-3xl font-bold text-purple-400 font-mono">185 Mbps</div>
+              <div class="text-[11px] text-emerald-400 mt-2 font-mono">Latencia: 32 ms</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: FIDEICOMISO & CAJA -->
+        <div id="tab-fideicomiso" class="bunker-view hidden space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>📊</span> Finanzas del Fideicomiso Fundación Valle de Luz
+              </h3>
+              <p class="text-xs text-slate-400">Fondo común inyectado por ShopDigital y rendición de cuentas.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+              Balance: SUPERÁVIT
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Aporte Mensual ShopDigital</div>
+              <div class="text-2xl font-bold text-white font-mono">$ 6.500.000 ARS</div>
+              <div class="text-[11px] text-emerald-400 mt-1 font-mono">Sustento garantizado</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Gastos Comunitarios Mes</div>
+              <div class="text-2xl font-bold text-amber-400 font-mono">$ 2.180.000 ARS</div>
+              <div class="text-[11px] text-slate-400 mt-1 font-mono">Compras mayoristas + servicios</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="text-xs text-slate-400 mb-1">Fondo de Reserva Fideicomiso</div>
+              <div class="text-2xl font-bold text-emerald-400 font-mono">$ 4.320.000 ARS</div>
+              <div class="text-[11px] text-emerald-400 mt-1 font-mono">Autonomía 3 meses</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: ASPIRANTES Y TALENTOS -->
+        <div id="tab-postulantes" class="bunker-view hidden space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>👥</span> Postulaciones Recibidas desde la Web
+              </h3>
+              <p class="text-xs text-slate-400">Selección de las 6 parejas fundadoras y evaluación de facultades.</p>
+            </div>
+          </div>
+
+          <div class="bg-bunker-card border border-bunker-border rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-900/90 text-slate-400 font-mono uppercase text-[10px] border-b border-white/10">
+                  <tr>
+                    <th class="p-4">Aspirante / Pareja</th>
+                    <th class="p-4">Modalidad</th>
+                    <th class="p-4">Talento Principal</th>
+                    <th class="p-4">Contacto</th>
+                    <th class="p-4">Estado</th>
+                    <th class="p-4 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="postulantes-tbody" class="divide-y divide-white/5 font-mono">
+                  <tr class="hover:bg-white/5">
+                    <td class="p-4 font-sans font-semibold text-white">Lucas & Mariana Giménez</td>
+                    <td class="p-4">Matrimonio</td>
+                    <td class="p-4 text-emerald-300">💻 Software & Cloud (ShopDigital)</td>
+                    <td class="p-4 text-slate-400">+54 9 351 452-9901</td>
+                    <td class="p-4"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px]">En Revisión</span></td>
+                    <td class="p-4 text-right"><button class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-[10px] transition-all">Evaluar</button></td>
+                  </tr>
+                  <tr class="hover:bg-white/5">
+                    <td class="p-4 font-sans font-semibold text-white">Esteban & Romina Paredes</td>
+                    <td class="p-4">Matrimonio</td>
+                    <td class="p-4 text-amber-300">🔋 Ecotecnología & Solar</td>
+                    <td class="p-4 text-slate-400">+54 9 11 6812-4411</td>
+                    <td class="p-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]">Aprobado</span></td>
+                    <td class="p-4 text-right"><button class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-[10px] transition-all">Ficha</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 6: GESTIÓN DE GALERÍA Y MULTIMEDIA -->
+        <div id="tab-galeria" class="bunker-view space-y-6 hidden">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>📸</span> Gestor de Galería Multimedia & CMS de la Comunidad
+              </h3>
+              <p class="text-xs text-slate-400">Subí fotos y videos directamente desde tu computadora, o pegá enlaces de YouTube para actualizar la web oficial en vivo.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="galeria-sync-badge" class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+                ● Modo Live: Sincronizado
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- FORMULARIO DE CARGA DE NUEVO MEDIO -->
+            <div class="bg-[#0B111A] border border-emerald-500/30 rounded-2xl p-5 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="text-lg">➕</span>
+                  <h4 class="font-bold text-white text-sm">Publicar Foto o Video</h4>
+                </div>
+              </div>
+
+              <!-- SELECTOR DE ORIGEN (ARCHIVO PC VS LINK WEB) -->
+              <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-slate-900/90 border border-white/10 text-xs font-semibold">
+                <button type="button" id="btn-tab-file" class="py-2 rounded-lg bg-emerald-500 text-slate-950 font-bold transition-all flex items-center justify-center gap-1.5">
+                  <span>📁</span> Desde la PC
+                </button>
+                <button type="button" id="btn-tab-url" class="py-2 rounded-lg text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+                  <span>🔗</span> Enlace Web / YouTube
+                </button>
+              </div>
+
+              <form id="form-add-media" class="space-y-4 text-xs">
+                
+                <!-- SECCIÓN 1: SUBIR DESDE COMPUTADORA -->
+                <div id="section-upload-file" class="space-y-2">
+                  <label class="block text-slate-300 font-semibold">Seleccionar Foto o Video de tu Equipo *</label>
+                  <div class="relative border-2 border-dashed border-emerald-500/40 hover:border-emerald-400 rounded-2xl p-4 text-center cursor-pointer bg-slate-900/50 transition-all group" id="drop-zone-media">
+                    <input type="file" id="media-file-input" accept="image/*,video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <div id="file-placeholder" class="space-y-1">
+                      <div class="text-3xl group-hover:scale-110 transition-transform">📂</div>
+                      <div class="text-slate-200 font-semibold">Hacé clic para elegir archivo</div>
+                      <div class="text-[10px] text-slate-400">JPG, PNG, WebP, MP4 o WebM</div>
+                    </div>
+                    <div id="file-preview-container" class="hidden space-y-2">
+                      <div class="max-h-36 overflow-hidden rounded-xl bg-black/50 border border-white/10 flex items-center justify-center">
+                        <img id="file-preview-img" src="" alt="Preview" class="max-h-36 object-contain hidden">
+                        <video id="file-preview-video" src="" controls class="max-h-36 w-full hidden"></video>
+                      </div>
+                      <div id="file-info-text" class="text-[11px] text-emerald-300 font-mono font-semibold truncate"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SECCIÓN 2: PEGAR ENLACE WEB O YOUTUBE -->
+                <div id="section-upload-url" class="space-y-2 hidden">
+                  <label class="block text-slate-300 font-semibold">URL del Archivo o Video de YouTube *</label>
+                  <input type="url" id="media-url" placeholder="https://... o https://youtube.com/watch?v=..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                  <p class="text-[10px] text-slate-500">Podés pegar enlaces de fotos web o videos de YouTube (se transforman automáticamente a reproductor).</p>
+                </div>
+
+                <!-- TÍTULO -->
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Título / Avance *</label>
+                  <input type="text" id="media-titulo" required placeholder="Ej: Nueva foto de la base de montaña" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                </div>
+
+                <!-- TIPO Y CATEGORÍA -->
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Tipo de Medio *</label>
+                    <select id="media-tipo" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-emerald-400">
+                      <option value="foto">📷 Fotografía</option>
+                      <option value="video">🎬 Video</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Categoría *</label>
+                    <select id="media-categoria" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-emerald-400">
+                      <option value="Acción Social & Parajes">Acción Social & Parajes</option>
+                      <option value="Comedores Comunitarios">Comedores Comunitarios</option>
+                      <option value="Logística Hilux 4x4">Logística Hilux 4x4</option>
+                      <option value="Voluntariado & Donaciones">Voluntariado & Donaciones</option>
+                      <option value="Dron & Territorio">Dron & Territorio</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- DESCRIPCIÓN -->
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Descripción / Bitácora</label>
+                  <textarea id="media-descripcion" rows="2" placeholder="Detalles, avances o fecha..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 resize-none"></textarea>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <input type="checkbox" id="media-destacado" class="rounded text-emerald-500 focus:ring-emerald-400">
+                  <label for="media-destacado" class="text-slate-300">Marcar como Destacado ⭐</label>
+                </div>
+
+                <button type="submit" id="btn-submit-media" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+                  <span>Guardar y Publicar en la Web</span>
+                  <span>🚀</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- GRILLA DE MEDIOS EN VIVO -->
+            <div class="lg:col-span-2 bg-[#0B111A] border border-white/10 rounded-2xl p-5 space-y-4 shadow-xl flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                      <span>🖼️</span> Medios Publicados en la Web Oficial
+                    </h4>
+                    <span id="badge-galeria-count" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">6</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button id="btn-reset-default-media" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white font-mono text-[10px] transition-all" title="Restaurar los 6 medios por defecto">
+                      Restaurar Iniciales
+                    </button>
+                    <button id="btn-refresh-galeria" class="px-3 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-slate-950 font-mono text-[10px] font-bold transition-all">
+                      ↻ Refrescar
+                    </button>
+                  </div>
+                </div>
+
+                <!-- CONTENEDOR DE LA GRILLA -->
+                <div id="bunker-galeria-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto pr-1 pt-3">
+                  <!-- Renderizado dinámico desde bunker.js -->
+                </div>
+              </div>
+
+              <!-- NOTA INFORMATIVA -->
+              <div class="p-3 rounded-xl bg-slate-900/60 border border-white/5 text-[10px] text-slate-400 flex items-center justify-between">
+                <span>💡 Los cambios se sincronizan en tiempo real con la web pública (<a href="https://fundacionvalledeluz.org/#galeria" target="_blank" class="text-emerald-400 underline">fundacionvalledeluz.org</a>).</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB 5: SECOPS & AUDITORÍA -->
+        <div id="tab-secops" class="bunker-view hidden space-y-6">
+          <div class="flex items-center justify-between pb-4 border-b border-white/10">
+            <div>
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>🛡️</span> SecOps, Credenciales y Auditoría
+              </h3>
+              <p class="text-xs text-slate-400">Políticas RLS de Supabase, accesos y seguridad del búnker.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="font-bold text-emerald-400 mb-3">Lista Blanca de Consejo y Logística (Supabase RLS)</div>
+              <ul class="space-y-2 text-slate-300">
+                <li class="flex items-center justify-between"><span>walyconexion@gmail.com</span> <span class="text-emerald-400">DIRECTOR</span></li>
+                <li class="flex items-center justify-between"><span>fundadores.faro@gmail.com</span> <span class="text-emerald-400">AUTORIZADO</span></li>
+                <li class="flex items-center justify-between"><span>admin.traslasierra@gmail.com</span> <span class="text-emerald-400">AUTORIZADO</span></li>
+              </ul>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-bunker-card border border-bunker-border">
+              <div class="font-bold text-amber-400 mb-3">Estado de Infraestructura Cloud</div>
+              <ul class="space-y-2 text-slate-300">
+                <li class="flex items-center justify-between"><span>GitHub Repository:</span> <span class="text-emerald-400">Connected</span></li>
+                <li class="flex items-center justify-between"><span>Vercel CI/CD:</span> <span class="text-emerald-400">Ready</span></li>
+                <li class="flex items-center justify-between"><span>DonWeb DNS:</span> <span class="text-emerald-400">Secured</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="src/bunker.js"></script>
+</body>
+</html>
