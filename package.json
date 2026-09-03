@@ -1,13 +1,1 @@
-{
-  "name": "fundacion-valle-de-luz",
-  "version": "1.0.0",
-  "description": "Portal Institucional y Búnker Táctico — Fundación Valle de Luz",
-  "private": true,
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.112.4",
-    "ffmpeg-static": "^5.3.0"
-  }
-}
+﻿{"name":"fundacion-valle-de-luz","version":"1.0.0","description":"Portal Institucional Fundacion Valle de Luz","private":true}
