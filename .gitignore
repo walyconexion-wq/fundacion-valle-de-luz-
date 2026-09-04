@@ -8,3 +8,4 @@ update_*.js
 extract_frames.js
 .env
 .env.local
+.vercel
