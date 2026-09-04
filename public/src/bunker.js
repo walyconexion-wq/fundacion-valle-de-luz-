@@ -739,4 +739,249 @@ Directiva para Luz-01: La plataforma se encuentra en estado excelente (${totalSc
     initOBD2Scanner();
   }
 
+
+
+  // ============================================================
+  // GESTOR DE EDICIÓN DE MEDIO (MODAL & ACTUALIZACIÓN EN VIVO)
+  // ============================================================
+  const modalEditMedia = document.getElementById('modal-edit-media');
+  const formEditMedia = document.getElementById('form-edit-media');
+  const btnCloseEditModal = document.getElementById('btn-close-edit-modal');
+  const btnCancelEditModal = document.getElementById('btn-cancel-edit-modal');
+
+  const editMediaId = document.getElementById('edit-media-id');
+  const editMediaTitulo = document.getElementById('edit-media-titulo');
+  const editMediaTipo = document.getElementById('edit-media-tipo');
+  const editMediaCategoria = document.getElementById('edit-media-categoria');
+  const editMediaDescripcion = document.getElementById('edit-media-descripcion');
+  const editMediaDestacado = document.getElementById('edit-media-destacado');
+  const editMediaFile = document.getElementById('edit-media-file');
+  const editMediaUrl = document.getElementById('edit-media-url');
+
+  const editPreviewImg = document.getElementById('edit-preview-img');
+  const editPreviewIframe = document.getElementById('edit-preview-iframe');
+  const editPreviewVideo = document.getElementById('edit-preview-video');
+  const editPreviewEmpty = document.getElementById('edit-preview-empty');
+
+  let editReplacementBase64 = null;
+  let currentEditingItem = null;
+
+  function hideAllEditPreviews() {
+    if (editPreviewImg) editPreviewImg.classList.add('hidden');
+    if (editPreviewIframe) editPreviewIframe.classList.add('hidden');
+    if (editPreviewVideo) editPreviewVideo.classList.add('hidden');
+    if (editPreviewEmpty) editPreviewEmpty.classList.add('hidden');
+  }
+
+  function showEditPreview(url, tipo) {
+    hideAllEditPreviews();
+    if (!url) {
+      if (editPreviewEmpty) editPreviewEmpty.classList.remove('hidden');
+      return;
+    }
+    if (tipo === 'video') {
+      if (url.includes('youtube.com/embed/')) {
+        if (editPreviewIframe) {
+          editPreviewIframe.src = url;
+          editPreviewIframe.classList.remove('hidden');
+        }
+      } else {
+        if (editPreviewVideo) {
+          editPreviewVideo.src = url;
+          editPreviewVideo.classList.remove('hidden');
+        }
+      }
+    } else {
+      if (editPreviewImg) {
+        editPreviewImg.src = url;
+        editPreviewImg.classList.remove('hidden');
+      }
+    }
+  }
+
+  function openEditModal(item) {
+    if (!modalEditMedia || !item) return;
+    currentEditingItem = item;
+    editReplacementBase64 = null;
+
+    if (editMediaId) editMediaId.value = item.id;
+    if (editMediaTitulo) editMediaTitulo.value = item.titulo || '';
+    if (editMediaTipo) editMediaTipo.value = item.tipo || 'foto';
+    if (editMediaDescripcion) editMediaDescripcion.value = item.descripcion || '';
+    if (editMediaDestacado) editMediaDestacado.checked = !!item.destacado;
+
+    // Sincronizar categorías del formulario principal
+    const mainCategorySelect = document.getElementById('media-categoria');
+    if (mainCategorySelect && editMediaCategoria) {
+      editMediaCategoria.innerHTML = mainCategorySelect.innerHTML;
+      editMediaCategoria.value = item.categoria || mainCategorySelect.value;
+    }
+
+    if (editMediaFile) editMediaFile.value = '';
+    if (editMediaUrl) editMediaUrl.value = '';
+
+    showEditPreview(item.url, item.tipo);
+    modalEditMedia.classList.remove('hidden');
+  }
+
+  function closeEditModal() {
+    if (!modalEditMedia) return;
+    modalEditMedia.classList.add('hidden');
+    currentEditingItem = null;
+    editReplacementBase64 = null;
+    if (editMediaFile) editMediaFile.value = '';
+    if (editMediaUrl) editMediaUrl.value = '';
+    hideAllEditPreviews();
+  }
+
+  if (btnCloseEditModal) btnCloseEditModal.addEventListener('click', closeEditModal);
+  if (btnCancelEditModal) btnCancelEditModal.addEventListener('click', closeEditModal);
+
+  // Escuchar cambio de archivo nuevo en el modal
+  if (editMediaFile) {
+    editMediaFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const isImg = file.type.startsWith('image/');
+      const isVid = file.type.startsWith('video/');
+
+      if (isVid && editMediaTipo) editMediaTipo.value = 'video';
+      if (isImg && editMediaTipo) editMediaTipo.value = 'foto';
+
+      if (isImg) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 1400;
+            const MAX_HEIGHT = 1400;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            editReplacementBase64 = canvas.toDataURL('image/jpeg', 0.85);
+            showEditPreview(editReplacementBase64, 'foto');
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else if (isVid) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          editReplacementBase64 = event.target.result;
+          showEditPreview(editReplacementBase64, 'video');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Escuchar cambio de URL en el modal
+  if (editMediaUrl) {
+    editMediaUrl.addEventListener('input', (e) => {
+      const url = e.target.value.trim();
+      if (url) {
+        const tipo = editMediaTipo ? editMediaTipo.value : 'foto';
+        const formatted = formatMediaUrl(url, tipo);
+        showEditPreview(formatted, tipo);
+      } else if (currentEditingItem) {
+        showEditPreview(currentEditingItem.url, currentEditingItem.tipo);
+      }
+    });
+  }
+
+  // Guardar cambios del modal
+  if (formEditMedia) {
+    formEditMedia.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentEditingItem) return;
+
+      const submitBtn = document.getElementById('btn-submit-edit-media');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>⚡ Guardando Cambios...</span>';
+      }
+
+      const id = editMediaId.value;
+      const titulo = editMediaTitulo.value.trim();
+      const tipo = editMediaTipo.value;
+      const categoria = editMediaCategoria.value;
+      const descripcion = editMediaDescripcion.value.trim();
+      const destacado = editMediaDestacado.checked;
+      const urlTyped = editMediaUrl.value.trim();
+
+      let finalUrl = currentEditingItem.url;
+      if (editReplacementBase64) {
+        finalUrl = editReplacementBase64;
+      } else if (urlTyped) {
+        finalUrl = formatMediaUrl(urlTyped, tipo);
+      }
+
+      const updatedItem = {
+        ...currentEditingItem,
+        id,
+        titulo,
+        tipo,
+        categoria,
+        descripcion,
+        destacado,
+        url: finalUrl,
+        updatedAt: new Date().toISOString()
+      };
+
+      // 1. Guardar en Supabase
+      if (supabase) {
+        try {
+          await supabase.from('galeria_multimedia').upsert([updatedItem]);
+        } catch (err) {
+          console.warn('Actualización local Supabase fallback:', err);
+        }
+      }
+
+      // 2. Guardar en LocalStorage
+      let localItems = [];
+      try {
+        localItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (err) {
+        localItems = [];
+      }
+
+      const itemIdx = localItems.findIndex(i => i.id === id);
+      if (itemIdx !== -1) {
+        localItems[itemIdx] = updatedItem;
+      } else {
+        localItems.unshift(updatedItem);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(localItems));
+
+      // 3. Notificación y recarga
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Guardar Cambios</span><span>💾</span>';
+      }
+
+      closeEditModal();
+      alert('✓ ¡Medio actualizado con éxito! Los cambios ya están en vivo.');
+      loadGaleriaData();
+    });
+  }
+
 })();

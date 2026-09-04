@@ -93,7 +93,7 @@
       </div>
 
       <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-        <a href="index.html" class="hover:text-slate-300 transition-colors">← Volver a Web Pública</a>
+        <a href="index.html" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-emerald-300 border border-white/10 hover:border-emerald-400/40 text-xs font-mono transition-all font-semibold"><span>← Retroceder a la Web Pública</span></a>
         <span>IPJ Córdoba · RLS Active</span>
       </div>
 
@@ -199,6 +199,13 @@
         <div class="pt-4 border-t border-white/5 text-[11px] font-mono text-slate-500 space-y-1 px-2">
           <div>Backend: Supabase RLS</div>
           <div>Sustento: ShopDigital ⚡</div>
+        </div>
+      
+        <div class="pt-4 border-t border-white/10 mt-auto">
+          <a href="index.html" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-xs font-mono text-slate-300 hover:text-white border border-white/10 hover:border-emerald-400/40 transition-all font-medium">
+            <span>←</span>
+            <span>Retroceder al Sitio Web</span>
+          </a>
         </div>
       </aside>
 
@@ -686,5 +693,103 @@ El Scanner OBD-II aún no ha detectado anomalías. Presione 'INICIAR ESCANEO OBD
   </div>
 
   <script src="src/bunker.js"></script>
+
+  <!-- MODAL TÁCTICO: EDICIÓN DE FOTO / VIDEO / TEXTO (CMS BÚNKER) -->
+  <div id="modal-edit-media" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="max-w-lg w-full bg-[#0D131D] border border-emerald-500/40 rounded-3xl p-6 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 text-base">✏️</div>
+          <div>
+            <h3 class="font-bold text-white text-sm">Editar Medio de Galería</h3>
+            <div class="text-[10px] text-slate-400 font-mono">Actualización en vivo de contenido y multimedia</div>
+          </div>
+        </div>
+        <button type="button" id="btn-close-edit-modal" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-300 flex items-center justify-center text-sm font-mono transition-colors">✕</button>
+      </div>
+
+      <form id="form-edit-media" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-media-id">
+
+        <!-- PREVISUALIZACIÓN ACTUAL -->
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Previsualización del Medio</label>
+          <div class="w-full h-44 bg-slate-950 rounded-2xl overflow-hidden border border-white/10 flex items-center justify-center relative shadow-inner" id="edit-preview-box">
+            <img id="edit-preview-img" src="" alt="Preview" class="w-full h-full object-cover hidden">
+            <iframe id="edit-preview-iframe" src="" class="w-full h-full border-0 hidden"></iframe>
+            <video id="edit-preview-video" src="" controls class="w-full h-full object-cover hidden"></video>
+            <div id="edit-preview-empty" class="text-slate-500 text-xs hidden">Sin vista previa</div>
+          </div>
+        </div>
+
+        <!-- REEMPLAZO OPCIONAL DE ARCHIVO / URL -->
+        <div class="p-3 rounded-xl bg-slate-900/60 border border-white/10 space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="text-slate-200 font-semibold text-[11px]">¿Deseás cambiar la foto o video? (Opcional)</label>
+            <span class="text-[9px] font-mono text-emerald-300">Si no elegís nada, se conserva el actual</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-slate-400 mb-1">Elegir nuevo archivo de la PC:</label>
+              <input type="file" id="edit-media-file" accept="image/*,video/*" class="w-full px-2 py-1.5 rounded-lg bg-slate-950 border border-white/10 text-slate-300 text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30 cursor-pointer">
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-400 mb-1">O nueva URL / YouTube:</label>
+              <input type="url" id="edit-media-url" placeholder="https://..." class="w-full px-2.5 py-1.5 rounded-lg bg-slate-950 border border-white/10 text-white placeholder-slate-500 text-[10px] focus:outline-none focus:border-emerald-400">
+            </div>
+          </div>
+        </div>
+
+        <!-- TÍTULO -->
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Título / Avance *</label>
+          <input type="text" id="edit-media-titulo" required placeholder="Título del medio" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <!-- TIPO Y CATEGORÍA -->
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Tipo de Medio *</label>
+            <select id="edit-media-tipo" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-emerald-400">
+              <option value="foto">📷 Fotografía</option>
+              <option value="video">🎬 Video</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Categoría *</label>
+            <select id="edit-media-categoria" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-emerald-400">
+              <!-- Copiado dinámico de categorías del proyecto -->
+            </select>
+          </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Descripción / Bitácora</label>
+          <textarea id="edit-media-descripcion" rows="2" placeholder="Detalles o avances..." class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 resize-none"></textarea>
+        </div>
+
+        <!-- DESTACADO -->
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="edit-media-destacado" class="rounded text-emerald-500 focus:ring-emerald-400">
+          <label for="edit-media-destacado" class="text-slate-300">Marcar como Destacado ⭐</label>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-white/10 font-mono">
+          <button type="button" id="btn-cancel-edit-modal" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-all">
+            Cancelar
+          </button>
+          <button type="submit" id="btn-submit-edit-media" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-1.5">
+            <span>Guardar Cambios</span>
+            <span>💾</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
 </body>
 </html>
