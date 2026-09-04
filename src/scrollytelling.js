@@ -579,7 +579,65 @@
   window.addEventListener('resize', resizeCanvas);
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  
+  // 7. MOTOR SCROLLSPY Y EFECTO ACTIVO EN MENÚ DE NAVEGACIÓN (ESMERALDA)
+  function initScrollSpy() {
+    const navLinks = document.querySelectorAll('#navbar-links .nav-link');
+    if (!navLinks || navLinks.length === 0) return;
+
+    const sections = [];
+    navLinks.forEach(link => {
+      const hash = link.getAttribute('href');
+      if (hash && hash.startsWith('#')) {
+        const sec = document.querySelector(hash);
+        if (sec) {
+          sections.push({ hash, element: sec, link });
+        }
+      }
+    });
+
+    if (sections.length === 0) return;
+
+    function onScrollSpy() {
+      const scrollPos = window.scrollY + window.innerHeight * 0.35;
+      let activeIndex = -1;
+
+      for (let i = 0; i < sections.length; i++) {
+        const top = sections[i].element.offsetTop;
+        const height = sections[i].element.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      if (window.scrollY < window.innerHeight * 0.35) {
+        activeIndex = -1;
+      } else if (activeIndex === -1) {
+        for (let i = sections.length - 1; i >= 0; i--) {
+          if (scrollPos >= sections[i].element.offsetTop) {
+            activeIndex = i;
+            break;
+          }
+        }
+      }
+
+      navLinks.forEach((l, idx) => {
+        if (idx === activeIndex) {
+          l.classList.add('nav-link-active');
+        } else {
+          l.classList.remove('nav-link-active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScrollSpy, { passive: true });
+    onScrollSpy();
+    setTimeout(onScrollSpy, 300);
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
+    try { initScrollSpy(); } catch(e) { console.warn("ScrollSpy:", e); }
     preloadImages();
     resizeCanvas();
     requestAnimationFrame(animationLoop);

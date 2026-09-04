@@ -97,10 +97,6 @@
         <a href="#regla-tiempo" class="nav-link hover:text-emerald-300">Regla 70/20/10</a>
         <a href="#ubicacion" class="nav-link hover:text-emerald-300">Ubicación</a>
         <a href="#galeria" class="nav-link hover:text-emerald-300">Galería</a>
-        <a href="#tablero-maestro" class="nav-link hover:text-cyan-300 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          Tablero
-        </a>
         <a href="#formacion" class="nav-link hover:text-emerald-300">Formación</a>
       </div>
 
@@ -732,119 +728,6 @@
           </div>
         </div>
       </div>
-
-      <!-- ESCENA 5: TABLERO MAESTRO DE BÚNKERES (480vh - 620vh) -->
-      <section id="tablero-maestro" class="min-h-[160vh] flex flex-col items-center justify-center px-4 py-16">
-        <div class="max-w-6xl w-full glass-card-fundacion border-cyan-500/35 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl shadow-black/90">
-          
-          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
-            <div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono uppercase tracking-widest mb-2">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-                Centro de Comando & Agentes
-              </div>
-              <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white">
-                Tablero Maestro de Búnkeres
-              </h2>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
-                ● Telemetría: ONLINE
-              </span>
-              <span class="px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs">
-                Backend: Supabase Active
-              </span>
-            </div>
-          </div>
-
-          <!-- GRID DE LOS 5 BÚNKERES OPERATIVOS -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
-            <!-- Búnker 1: Automatización & Agente -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-cyan-500/25 hover:bg-black/35 hover:border-cyan-400/50 transition-all group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-2xl">🤖</span>
-                  <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-200 text-[10px] font-mono uppercase">Agente Activo</span>
-                </div>
-                <h4 class="font-bold text-white text-base mb-1">Búnker 1: Automatización & Chat</h4>
-                <p class="text-xs text-slate-400 mb-4">Respuestas automáticas a aspirantes, triage con IA de mensajes y derivación a coordinadores.</p>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-cyan-300 flex items-center justify-between">
-                <span>Mensajes atendidos hoy:</span>
-                <strong class="text-white">18</strong>
-              </div>
-            </div>
-
-            <!-- Búnker 2: Ecotecnología & Telemetría -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-amber-500/25 hover:bg-black/35 hover:border-amber-400/50 transition-all group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-2xl">🔋</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">Telemetría IoT</span>
-                </div>
-                <h4 class="font-bold text-white text-base mb-1">Búnker 2: Ecotecnología</h4>
-                <p class="text-xs text-slate-400 mb-4">Monitoreo de microrred fotovoltaica, banco de litio, cisterna en torre y Starlink.</p>
-              </div>
-              <div class="grid grid-cols-2 gap-2 font-mono text-[10px]">
-                <div class="p-2 rounded-lg bg-slate-900 text-emerald-200">Litio: <strong>94%</strong></div>
-                <div class="p-2 rounded-lg bg-slate-900 text-emerald-200">Agua: <strong>88%</strong></div>
-              </div>
-            </div>
-
-            <!-- Búnker 3: Finanzas & Fideicomiso -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-emerald-500/25 hover:bg-black/35 hover:border-emerald-400/50 transition-all group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-2xl">📊</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-200 text-[10px] font-mono uppercase">Fideicomiso</span>
-                </div>
-                <h4 class="font-bold text-white text-base mb-1">Búnker 3: Contabilidad</h4>
-                <p class="text-xs text-slate-400 mb-4">Administración del fondo común provisto por ShopDigital y pagos de la hectárea.</p>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-emerald-300 flex items-center justify-between">
-                <span>Estado fondo común:</span>
-                <strong class="text-white">SUPERÁVIT</strong>
-              </div>
-            </div>
-
-            <!-- Búnker 4: Difusión & Convocatoria -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-purple-500/25 hover:bg-black/35 hover:border-purple-400/50 transition-all group flex flex-col justify-between">
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-2xl">📢</span>
-                  <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-200 text-[10px] font-mono uppercase">Convocatoria</span>
-                </div>
-                <h4 class="font-bold text-white text-base mb-1">Búnker 4: Marketing & Talento</h4>
-                <p class="text-xs text-slate-400 mb-4">Control de postulantes recibidos, perfiles técnicos y selección de las 6 parejas fundadoras.</p>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-900/80 border border-white/5 font-mono text-[11px] text-purple-300 flex items-center justify-between">
-                <span>Postulaciones activas:</span>
-                <strong class="text-white">12 perfiles</strong>
-              </div>
-            </div>
-
-            <!-- Búnker 5: SecOps & Roles -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-black/25 border border-red-500/25 hover:bg-black/35 hover:border-red-400/50 transition-all group flex flex-col justify-between md:col-span-2">
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-2xl">🛡️</span>
-                  <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-200 text-[10px] font-mono uppercase">SecOps & Credenciales</span>
-                </div>
-                <h4 class="font-bold text-white text-base mb-1">Búnker 5: Seguridad & Control de Accesos</h4>
-                <p class="text-xs text-slate-400 mb-4">Gestión segura de credenciales Supabase / Vercel / GitHub y llaves criptográficas de los fundadores.</p>
-              </div>
-              <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
-                <span class="text-emerald-400">✓ RLS Active</span>
-                <span class="text-emerald-400">✓ DNS DonWeb Verified</span>
-                <span class="text-emerald-400">✓ GitHub CI/CD Connected</span>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
 
       <!-- ESCENA: EMBUDO DE SUSCRIPCIÓN, CONTACTO Y COMUNIDAD (#comunidad) -->
       <section id="formacion" class="min-h-[160vh] flex flex-col items-center justify-center px-4 py-20">
