@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FUNDACIÓN VALLE DE LUZ - MOTOR MAESTRO DE SCROLLYTELLING Y EXPERIENCIA INTERACTIVA
  * Sincronizado con Supabase Cloud, Reloj Digital, Asistente Luz-03 y Galería Multimedia
  */
@@ -283,6 +283,9 @@
     const filterBtns = document.querySelectorAll('.galeria-filter-btn');
     const lightboxModal = document.getElementById('galeria-lightbox');
     const btnCloseLightbox = document.getElementById('btn-close-lightbox');
+    const btnCloseLightboxTop = document.getElementById('btn-close-lightbox-top');
+    const btnBackToGallery = document.getElementById('btn-back-to-gallery');
+    const lightboxBackdrop = document.getElementById('lightbox-backdrop');
     const lightboxContent = document.getElementById('lightbox-content');
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxDesc = document.getElementById('lightbox-desc');
@@ -450,45 +453,105 @@
         `;
 
         card.addEventListener('click', () => {
-          if (!lightboxModal) return;
-          lightboxTitle.textContent = item.titulo;
-          lightboxDesc.textContent = item.descripcion || 'Registro oficial de la Fundación Valle de Luz en Traslasierra.';
-          lightboxBadge.textContent = item.tipo === 'video' ? '🎬 Video' : '📷 Fotografía';
-          lightboxBadge.className = item.tipo === 'video'
-            ? 'px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px] uppercase'
-            : 'px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-mono text-[10px] uppercase';
-
-          if (item.tipo === 'video') {
-            let embedUrl = item.url;
-            if (embedUrl.includes('watch?v=')) embedUrl = embedUrl.replace('watch?v=', 'embed/').split('&')[0];
-            if (embedUrl.includes('youtu.be/')) embedUrl = embedUrl.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0];
-            lightboxContent.innerHTML = `<iframe src="${embedUrl}?autoplay=1" class="w-full h-[50vh] sm:h-[60vh] border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-          } else {
-            lightboxContent.innerHTML = `<img src="${item.url}" alt="${item.titulo}" class="max-h-[65vh] w-auto object-contain rounded-xl p-2" onerror="this.src='/og-fundacion.jpg'">`;
-          }
-
-          lightboxModal.classList.remove('hidden');
+          openLightbox(item);
         });
 
         galeriaGrid.appendChild(card);
       });
     }
 
+    // Función de cierre unificada y segura
+    function closeLightbox(updateHistory = true) {
+      if (!lightboxModal) return;
+      lightboxModal.classList.add('hidden');
+      lightboxContent.innerHTML = '';
+      document.body.style.overflow = '';
+      if (updateHistory && window.location.hash === '#galeria-ver') {
+        history.back();
+      }
+    }
+
+    // Función de apertura con soporte de retorno en historial
+    function openLightbox(item) {
+      if (!lightboxModal) return;
+      lightboxTitle.textContent = item.titulo;
+      lightboxDesc.textContent = item.descripcion || 'Registro oficial de la Fundación Valle de Luz en Traslasierra.';
+      lightboxBadge.textContent = item.tipo === 'video' ? '🎬 Video' : '📷 Fotografía';
+      lightboxBadge.className = item.tipo === 'video'
+        ? 'px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono text-[11px] font-semibold uppercase tracking-wider'
+        : 'px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono text-[11px] font-semibold uppercase tracking-wider';
+
+      if (item.tipo === 'video') {
+        let embedUrl = item.url;
+        if (embedUrl.includes('watch?v=')) embedUrl = embedUrl.replace('watch?v=', 'embed/').split('&')[0];
+        if (embedUrl.includes('youtu.be/')) embedUrl = embedUrl.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0];
+        lightboxContent.innerHTML = `<iframe src="${embedUrl}?autoplay=1" class="w-full h-[50vh] sm:h-[62vh] border-0 rounded-2xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      } else {
+        lightboxContent.innerHTML = `<img src="${item.url}" alt="${item.titulo}" class="max-h-[68vh] w-auto max-w-full object-contain rounded-2xl p-1 shadow-2xl" onerror="this.src='og-fundacion.jpg'">`;
+      }
+
+      lightboxModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      // Añadir al historial para permitir retroceder con el botón atrás del celular / navegador
+      if (window.location.hash !== '#galeria-ver') {
+        window.history.pushState({ modal: 'galeria-lightbox' }, '', '#galeria-ver');
+      }
+    }
+
+    // Listeners de Cierre:
+    // 1. Botón X de la tarjeta
     if (btnCloseLightbox) {
-      btnCloseLightbox.addEventListener('click', () => {
-        lightboxModal.classList.add('hidden');
-        lightboxContent.innerHTML = '';
+      btnCloseLightbox.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox(true);
+      });
+    }
+
+    // 2. Botón X gigante flotante superior
+    if (btnCloseLightboxTop) {
+      btnCloseLightboxTop.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox(true);
+      });
+    }
+
+    // 3. Botón "← Volver a la galería" en barra inferior
+    if (btnBackToGallery) {
+      btnBackToGallery.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox(true);
+      });
+    }
+
+    // 4. Click en el backdrop / exterior
+    if (lightboxBackdrop) {
+      lightboxBackdrop.addEventListener('click', () => {
+        closeLightbox(true);
       });
     }
 
     if (lightboxModal) {
       lightboxModal.addEventListener('click', (e) => {
         if (e.target === lightboxModal) {
-          lightboxModal.classList.add('hidden');
-          lightboxContent.innerHTML = '';
+          closeLightbox(true);
         }
       });
     }
+
+    // 5. Tecla Escape (Esc)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightboxModal && !lightboxModal.classList.contains('hidden')) {
+        closeLightbox(true);
+      }
+    });
+
+    // 6. Botón Atrás del navegador o móvil (Android / iOS)
+    window.addEventListener('popstate', () => {
+      if (lightboxModal && !lightboxModal.classList.contains('hidden')) {
+        closeLightbox(false);
+      }
+    });
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {

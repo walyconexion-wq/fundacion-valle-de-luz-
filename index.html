@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Favicon Pestaña -->
-  <link rel="icon" type="image/svg+xml" href="/favicon-fundacion.svg" />
-  <link rel="apple-touch-icon" href="/og-fundacion.jpg" />
+  <!-- Favicon Oficial Fundación Valle de Luz (Universal SVG + PNG + ICO) -->
+  <link rel="icon" type="image/svg+xml" href="favicon-fundacion.svg" />
+  <link rel="alternate icon" type="image/png" sizes="96x96" href="favicon-fundacion.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-fundacion.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="favicon-fundacion.png" />
 
   <!-- Google Brand Card & WhatsApp / Facebook Open Graph -->
   <meta property="og:type" content="website" />
@@ -708,26 +711,7 @@
         </div>
       </section>
 
-      <!-- MODAL LIGHTBOX PARA FOTOS Y VIDEOS -->
-      <div id="galeria-lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 hidden">
-        <div class="relative max-w-4xl w-full bg-[#080C14] border border-amber-500/40 rounded-3xl overflow-hidden shadow-2xl">
-          <button id="btn-close-lightbox" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-red-500 text-white flex items-center justify-center transition-all border border-white/20">
-            ✕
-          </button>
-          <div id="lightbox-content" class="w-full flex flex-col items-center justify-center min-h-[300px] max-h-[80vh]">
-            <!-- Contenido dinámico (Img o Iframe de video) -->
-          </div>
-          <div class="p-5 bg-slate-950/90 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-            <div>
-              <h4 id="lightbox-title" class="font-bold text-white text-base">Título del medio</h4>
-              <p id="lightbox-desc" class="text-xs text-slate-400">Descripción</p>
-            </div>
-            <span id="lightbox-badge" class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px] uppercase">
-              Foto
-            </span>
-          </div>
-        </div>
-      </div>
+
 
       <!-- ESCENA: EMBUDO DE SUSCRIPCIÓN, CONTACTO Y COMUNIDAD (#comunidad) -->
       <section id="formacion" class="min-h-[160vh] flex flex-col items-center justify-center px-4 py-20">
@@ -1006,7 +990,7 @@
     <button id="btn-toggle-luz-chat" class="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E1B18] hover:from-[#1E293B] hover:to-[#2A241F] border border-amber-500/40 shadow-2xl shadow-black/80 transition-all transform hover:scale-105 active:scale-95">
       <div class="relative">
         <div class="w-9 h-9 rounded-xl overflow-hidden border border-emerald-400/50 shadow-md shadow-emerald-500/20 flex items-center justify-center bg-black/60 p-1">
-          <img src="/favicon-fundacion.svg" alt="Fundación Valle de Luz" class="w-full h-full object-contain">
+          <img src="favicon-fundacion.svg" alt="Fundación Valle de Luz" class="w-full h-full object-contain">
         </div>
         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
       </div>
@@ -1016,6 +1000,50 @@
       </div>
     </button>
 
+  </div>
+
+  <!-- MODAL LIGHTBOX DE GALERÍA (PANTALLA COMPLETA & CIERRE GARANTIZADO) -->
+  <div id="galeria-lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 hidden select-none">
+    
+    <!-- Botón Superior Flotante para Cerrar Rápido (X Gigante fija a la pantalla) -->
+    <button id="btn-close-lightbox-top" class="fixed top-4 right-4 sm:top-6 sm:right-6 z-[110] w-12 h-12 rounded-full bg-slate-900/90 hover:bg-red-600 text-white border-2 border-emerald-400/60 shadow-2xl flex items-center justify-center text-xl font-bold transition-all transform hover:scale-110 active:scale-95 cursor-pointer group" title="Cerrar y volver a la galería [Esc]">
+      <span class="group-hover:rotate-90 transition-transform duration-200">✕</span>
+    </button>
+
+    <!-- Fondo Backdrop para click exterior -->
+    <div id="lightbox-backdrop" class="absolute inset-0 z-0"></div>
+
+    <!-- Contenedor de la Tarjeta Central -->
+    <div class="relative z-10 max-w-5xl w-full bg-[#08120e] border border-emerald-500/40 rounded-3xl overflow-hidden shadow-2xl shadow-black/90 flex flex-col max-h-[90vh]">
+      
+      <!-- Botón de Cierre en la esquina de la tarjeta -->
+      <button id="btn-close-lightbox" class="absolute top-3 right-3 z-30 w-10 h-10 rounded-full bg-black/80 hover:bg-red-500 text-white flex items-center justify-center transition-all border border-emerald-400/40 shadow-lg text-lg font-bold cursor-pointer" title="Cerrar foto">
+        ✕
+      </button>
+
+      <!-- Contenedor dinámico (Imagen o Video) -->
+      <div id="lightbox-content" class="w-full flex-1 flex flex-col items-center justify-center min-h-[260px] max-h-[72vh] p-2 sm:p-4 overflow-hidden bg-black/40">
+        <!-- Inyectado dinámicamente por scrollytelling.js -->
+      </div>
+
+      <!-- Barra de Información y Botón Volver a la Galería -->
+      <div class="p-4 sm:p-5 bg-slate-950/95 border-t border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex-1 pr-2">
+          <h4 id="lightbox-title" class="font-bold text-white text-base sm:text-lg mb-1">Título del medio</h4>
+          <p id="lightbox-desc" class="text-xs text-slate-300 line-clamp-2">Descripción del registro oficial.</p>
+        </div>
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end shrink-0">
+          <span id="lightbox-badge" class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono text-[11px] font-semibold uppercase tracking-wider">
+            Fotografía
+          </span>
+          <button id="btn-back-to-gallery" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-mono font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/25 transform hover:scale-105 active:scale-95 cursor-pointer">
+            <span>← Volver a la galería</span>
+            <span class="bg-black/25 px-1.5 py-0.5 rounded text-[10px]">✕</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- SCRIPT DE SCROLLYTELLING Y CONTROL -->
