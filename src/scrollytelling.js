@@ -228,12 +228,12 @@
 
         const reply = data.reply || getLocalFallback(text);
         chatHistory.push({ role: 'assistant', content: reply });
-        appendChatMessage('Luz-03', reply, 'assistant');
+        appendChatMessage('Asistente Luz', reply, 'assistant');
       } catch (err) {
         indicator.remove();
         const reply = getLocalFallback(text);
         chatHistory.push({ role: 'assistant', content: reply });
-        appendChatMessage('Luz-03', reply, 'assistant');
+        appendChatMessage('Asistente Luz', reply, 'assistant');
       }
     }
 

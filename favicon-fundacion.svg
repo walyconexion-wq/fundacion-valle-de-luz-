@@ -1,0 +1,57 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="50%" stop-color="#064E3B"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="emerald-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo Circular -->
+  <circle cx="256" cy="256" r="248" fill="url(#bg-grad)" stroke="#10B981" stroke-width="8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8 6" opacity="0.6"/>
+
+  <!-- Rayos de Luz del Faro -->
+  <path d="M256 140 L440 60 L440 220 Z" fill="url(#gold-grad)" opacity="0.2" filter="url(#glow)"/>
+  <path d="M256 140 L72 60 L72 220 Z" fill="url(#gold-grad)" opacity="0.2" filter="url(#glow)"/>
+
+  <!-- Silueta de Montañas de Traslasierra de Fondo -->
+  <path d="M60 380 L160 260 L240 330 L350 220 L452 380 Z" fill="#06281E" opacity="0.7"/>
+
+  <!-- Manos de Ayuda / Abrazo Solidario (Base) -->
+  <path d="M110 390 C150 430 200 450 256 450 C312 450 362 430 402 390 C370 380 340 395 256 415 C172 395 142 380 110 390 Z" fill="url(#emerald-glow)"/>
+
+  <!-- Torre del Faro Central -->
+  <path d="M236 150 L276 150 L288 350 L224 350 Z" fill="#FFFFFF"/>
+  <!-- Franjas Esmeralda en la Torre -->
+  <path d="M231 200 L281 200 L284 240 L228 240 Z" fill="url(#emerald-glow)"/>
+  <path d="M226 280 L286 280 L288 320 L224 320 Z" fill="url(#emerald-glow)"/>
+
+  <!-- Cúpula y Luz del Faro -->
+  <path d="M232 150 L280 150 L280 125 C280 110 232 110 232 125 Z" fill="#1E293B"/>
+  <circle cx="256" cy="135" r="16" fill="url(#gold-grad)" filter="url(#glow)"/>
+  <circle cx="256" cy="135" r="8" fill="#FFFFFF"/>
+
+  <!-- Corazón / Chispa de Amor en Acción -->
+  <path d="M256 365 C256 365 240 350 230 360 C220 370 230 385 256 400 C282 385 292 370 282 360 C272 350 256 365 256 365 Z" fill="url(#gold-grad)"/>
+
+  <!-- Estrellas / Puntos de Luz -->
+  <circle cx="120" cy="120" r="4" fill="#FDE68A" opacity="0.8"/>
+  <circle cx="390" cy="110" r="3" fill="#FDE68A" opacity="0.8"/>
+  <circle cx="180" cy="80" r="3" fill="#34D399" opacity="0.8"/>
+  <circle cx="340" cy="75" r="4" fill="#34D399" opacity="0.8"/>
+</svg>

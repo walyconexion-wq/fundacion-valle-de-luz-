@@ -89,19 +89,19 @@
         </div>
       </a>
 
-      <div class="hidden lg:flex items-center gap-5 text-xs font-medium text-slate-300">
-        <a href="#mision-vision" class="hover:text-emerald-300 transition-colors">Visión & Misión</a>
-        <a href="#ecosistema" class="hover:text-cyan-300 transition-colors">Ecosistema</a>
-        <a href="#ecotecnologia" class="hover:text-emerald-300 transition-colors">Ecotecnología</a>
-        <a href="#gobernanza" class="hover:text-emerald-300 transition-colors">Organigrama</a>
-        <a href="#regla-tiempo" class="hover:text-emerald-300 transition-colors">Regla 70/20/10</a>
-        <a href="#ubicacion" class="hover:text-emerald-300 transition-colors">Ubicación</a>
-        <a href="#galeria" class="hover:text-emerald-300 transition-colors">Galería</a>
-        <a href="#tablero-maestro" class="hover:text-cyan-300 transition-colors flex items-center gap-1.5">
+      <div class="hidden lg:flex items-center gap-2.5 xl:gap-4 text-xs font-medium text-slate-300" id="navbar-links">
+        <a href="#mision-vision" class="nav-link hover:text-emerald-300">Visión & Misión</a>
+        <a href="#ecosistema" class="nav-link hover:text-cyan-300">Ecosistema</a>
+        <a href="#ecotecnologia" class="nav-link hover:text-emerald-300">Ecotecnología</a>
+        <a href="#gobernanza" class="nav-link hover:text-emerald-300">Organigrama</a>
+        <a href="#regla-tiempo" class="nav-link hover:text-emerald-300">Regla 70/20/10</a>
+        <a href="#ubicacion" class="nav-link hover:text-emerald-300">Ubicación</a>
+        <a href="#galeria" class="nav-link hover:text-emerald-300">Galería</a>
+        <a href="#tablero-maestro" class="nav-link hover:text-cyan-300 flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          Tablero de Búnkeres
+          Tablero
         </a>
-        <a href="#formacion" class="hover:text-emerald-300 transition-colors">Centro de Formación</a>
+        <a href="#formacion" class="nav-link hover:text-emerald-300">Formación</a>
       </div>
 
       <div class="flex items-center gap-2.5">
@@ -1054,14 +1054,14 @@
       <div class="bg-gradient-to-r from-[#0F172A] to-[#1E1B18] p-4 border-b border-white/10 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="relative">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-serif font-bold text-sm shadow-md shadow-amber-500/20">
-              L-03
+            <div class="w-10 h-10 rounded-2xl overflow-hidden border border-emerald-400/50 shadow-md shadow-emerald-500/20 flex items-center justify-center bg-black/60 p-1.5">
+              <img src="/favicon-fundacion.svg" alt="Fundación Valle de Luz" class="w-full h-full object-contain">
             </div>
             <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B101A] animate-pulse"></span>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h4 class="font-serif text-sm font-bold text-white">Asistente Luz-03</h4>
+              <h4 class="font-serif text-sm font-bold text-white">Asistente Luz</h4>
               <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[9px]">EN LÍNEA</span>
             </div>
             <p class="text-[10px] text-slate-400">Ingeniería & Atención a la Comunidad</p>
@@ -1075,11 +1075,11 @@
       <!-- CUERPO DE MENSAJES -->
       <div id="luz-chat-body" class="p-4 overflow-y-auto max-h-[340px] space-y-3 text-xs leading-relaxed">
         <div class="flex gap-2.5 items-start">
-          <div class="w-6 h-6 rounded-lg bg-emerald-500/20 border border-amber-500/40 text-emerald-300 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-            L
+          <div class="w-7 h-7 rounded-lg overflow-hidden border border-emerald-500/40 p-1 bg-black/50 shadow-sm flex items-center justify-center shrink-0 mt-0.5">
+            <img src="/favicon-fundacion.svg" alt="Fundación" class="w-full h-full object-contain">
           </div>
           <div class="p-3 rounded-2xl rounded-tl-sm bg-white/5 border border-white/5 text-slate-200">
-            ¡Hola! Soy <strong>Luz-03</strong>, la ingeniera asistente de la Fundación Valle de Luz. ¿En qué puedo orientarte hoy?
+            ¡Hola! Soy <strong>Asistente Luz</strong>, la ingeniera asistente de la Fundación Valle de Luz. ¿En qué puedo orientarte hoy?
           </div>
         </div>
 
@@ -1111,7 +1111,7 @@
 
       <!-- INPUT Y ENVIAR -->
       <form id="luz-chat-form" class="p-3 bg-[#080C14] border-t border-white/10 flex items-center gap-2">
-        <input type="text" id="luz-chat-input" placeholder="Escribí tu consulta a Luz-03..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400 transition-all">
+        <input type="text" id="luz-chat-input" placeholder="Escribí tu consulta a Asistente Luz..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-400 transition-all">
         <button type="submit" class="w-9 h-9 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 flex items-center justify-center shadow-md shadow-amber-500/20 transition-all transform hover:scale-105 active:scale-95 shrink-0">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
         </button>
@@ -1122,13 +1122,13 @@
     <!-- BOTÓN DISPARADOR FLOTANTE -->
     <button id="btn-toggle-luz-chat" class="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E1B18] hover:from-[#1E293B] hover:to-[#2A241F] border border-amber-500/40 shadow-2xl shadow-black/80 transition-all transform hover:scale-105 active:scale-95">
       <div class="relative">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-serif font-bold text-xs shadow-md shadow-amber-500/20">
-          L-03
+        <div class="w-9 h-9 rounded-xl overflow-hidden border border-emerald-400/50 shadow-md shadow-emerald-500/20 flex items-center justify-center bg-black/60 p-1">
+          <img src="/favicon-fundacion.svg" alt="Fundación Valle de Luz" class="w-full h-full object-contain">
         </div>
         <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
       </div>
       <div class="text-left hidden sm:block">
-        <div class="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors">Asistente Luz-03</div>
+        <div class="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors">Asistente Luz</div>
         <div class="text-[10px] text-slate-400">Atención a la Comunidad</div>
       </div>
     </button>
