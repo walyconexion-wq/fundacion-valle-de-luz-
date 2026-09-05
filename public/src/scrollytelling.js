@@ -220,32 +220,94 @@
       });
     }
 
-    function toggleChat(force) {
-      window.toggleLuzChat = toggleChat;
-      isOpen = typeof force === 'boolean' ? force : !isOpen;
-      if (!chatWindow) return;
+    let closeTimeout = null;
 
-      if (isOpen) {
-        chatWindow.classList.remove('hidden');
+    function openChat() {
+      const win = document.getElementById('luz-chat-window');
+      const input = document.getElementById('luz-chat-input');
+      if (!win) return;
+      if (closeTimeout) {
+        clearTimeout(closeTimeout);
+        closeTimeout = null;
+      }
+      win.classList.remove('hidden');
+      void win.offsetWidth; // Forzar reflow inmediato
+      win.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+      win.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+      if (input) {
         setTimeout(() => {
-          chatWindow.classList.remove('scale-95', 'opacity-0');
-          chatWindow.classList.add('scale-100', 'opacity-100');
-          if (chatInput) chatInput.focus();
-        }, 10);
-      } else {
-        chatWindow.classList.remove('scale-100', 'opacity-100');
-        chatWindow.classList.add('scale-95', 'opacity-0');
-        if (audioPlayer) {
-          audioPlayer.pause();
-        }
-        setTimeout(() => {
-          chatWindow.classList.add('hidden');
-        }, 300);
+          try { input.focus(); } catch(e) {}
+        }, 50);
       }
     }
 
-    if (btnToggle) btnToggle.addEventListener('click', () => toggleChat());
-    if (btnClose) btnClose.addEventListener('click', () => toggleChat(false));
+    function closeChat() {
+      const win = document.getElementById('luz-chat-window');
+      if (!win) return;
+      if (closeTimeout) {
+        clearTimeout(closeTimeout);
+      }
+      win.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+      win.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+      if (audioPlayer) {
+        try { audioPlayer.pause(); } catch(e) {}
+      }
+      closeTimeout = setTimeout(() => {
+        win.classList.add('hidden');
+        closeTimeout = null;
+      }, 250);
+    }
+
+    let lastToggleTime = 0;
+    function toggleChat(force) {
+      const now = Date.now();
+      if (typeof force !== 'boolean' && (now - lastToggleTime < 250)) {
+        return;
+      }
+      lastToggleTime = now;
+
+      const win = document.getElementById('luz-chat-window');
+      if (!win) return;
+
+      if (typeof force === 'boolean') {
+        if (force) openChat();
+        else closeChat();
+        return;
+      }
+
+      // Detectar estado visual real: cerrado si tiene hidden, opacity-0 o no tiene opacity-100
+      const isClosed = win.classList.contains('hidden') || win.classList.contains('opacity-0') || !win.classList.contains('opacity-100');
+      if (isClosed) {
+        openChat();
+      } else {
+        closeChat();
+      }
+    }
+
+    window.toggleLuzChat = toggleChat;
+
+    const btnToggleEl = document.getElementById('btn-toggle-luz-chat');
+    const btnCloseEl = document.getElementById('btn-close-luz-chat');
+
+    if (btnToggleEl) {
+      btnToggleEl.onclick = function(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        toggleChat();
+      };
+    }
+
+    if (btnCloseEl) {
+      btnCloseEl.onclick = function(e) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        toggleChat(false);
+      };
+    }
 
     if (chatForm) {
       chatForm.addEventListener('submit', (e) => {
