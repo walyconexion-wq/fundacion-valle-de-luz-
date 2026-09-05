@@ -155,6 +155,48 @@
 
   // 4. ASISTENTE FLOTANTE LUZ-02 (CONECTADO A /api/chat)
   function initLuzAssistant() {
+
+    // REPRODUCCIÓN AUTOMÁTICA DE VOZ HUMANA (ARGENTINA)
+    let isVoiceActive = true;
+    let currentAudio = null;
+
+    function reproducirVozHumana(texto) {
+      if (!isVoiceActive) return;
+
+      const textoLimpio = texto
+        .replace(/[\u{1F600}-\u{1F64F}|\u{1F300}-\u{1F5FF}|\u{1F680}-\u{1F6FF}|\u{1F1E0}-\u{1F1FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/gu, '')
+        .replace(/[*_#`~<>\[\]]/g, '')
+        .substring(0, 280)
+        .trim();
+
+      if (!textoLimpio) return;
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
+
+      const audioUrl = '/api/tts?voice=es-AR-ElenaNeural&text=' + encodeURIComponent(textoLimpio);
+      const audio = new Audio(audioUrl);
+      currentAudio = audio;
+
+      audio.play().catch(err => {
+        console.warn('Fallback a SpeechSynthesis nativo:', err);
+        try {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(textoLimpio);
+            utterance.lang = 'es-AR';
+            utterance.rate = 1.05;
+            const voices = window.speechSynthesis.getVoices();
+            const esVoice = voices.find(v => v.lang === 'es-AR') || voices.find(v => v.lang.startsWith('es'));
+            if (esVoice) utterance.voice = esVoice;
+            window.speechSynthesis.speak(utterance);
+          }
+        } catch (e) {}
+      });
+    }
+
     const btnToggle = document.getElementById('btn-toggle-luz-chat');
     const btnClose = document.getElementById('btn-close-luz-chat');
     const chatWindow = document.getElementById('luz-chat-window');
@@ -198,6 +240,7 @@
 
     if (chatForm) {
       chatForm.addEventListener('submit', (e) => {
+        desbloquearAudioContext();
         e.preventDefault();
         const text = chatInput.value.trim();
         if (!text) return;
@@ -229,11 +272,13 @@
         const reply = data.reply || getLocalFallback(text);
         chatHistory.push({ role: 'assistant', content: reply });
         appendChatMessage('Asistente Luz', reply, 'assistant');
+        reproducirVozHumana(reply);
       } catch (err) {
         indicator.remove();
         const reply = getLocalFallback(text);
         chatHistory.push({ role: 'assistant', content: reply });
         appendChatMessage('Asistente Luz', reply, 'assistant');
+        reproducirVozHumana(reply);
       }
     }
 
