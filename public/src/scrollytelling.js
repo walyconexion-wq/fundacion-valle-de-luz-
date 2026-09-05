@@ -155,6 +155,16 @@
 
   // 4. ASISTENTE FLOTANTE LUZ-02 (CONECTADO A /api/chat)
   function initLuzAssistant() {
+    const btnToggle = document.getElementById('btn-toggle-luz-chat');
+    const btnClose = document.getElementById('btn-close-luz-chat');
+    const chatWindow = document.getElementById('luz-chat-window');
+    const chatForm = document.getElementById('luz-chat-form');
+    const chatInput = document.getElementById('luz-chat-input');
+    const chatBody = document.getElementById('luz-chat-body');
+
+    let isOpen = false;
+    let chatHistory = [];
+    let isVoiceActive = true;
 
     // REPRODUCCIÓN AUTOMÁTICA DE VOZ HUMANA (AUTOPLAY TOTAL AL ESCRIBIR)
     let audioPlayer = null;
