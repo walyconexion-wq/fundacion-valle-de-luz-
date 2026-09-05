@@ -1,10 +1,11 @@
-﻿const http = require('http');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const chatHandler = require('./api/chat.js');
+const ttsHandler = require('./api/tts.js');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -44,6 +45,16 @@ const server = http.createServer(async (req, res) => {
 
       await chatHandler(req, res);
     });
+    return;
+  }
+
+  // Router API TTS
+  if (reqUrl === '/api/tts') {
+    const urlObj = new URL(req.url, 'http://' + (req.headers.host || 'localhost'));
+    req.query = Object.fromEntries(urlObj.searchParams);
+    res.status = (code) => { res.statusCode = code; return res; };
+    res.send = (data) => { res.end(data); };
+    await ttsHandler(req, res);
     return;
   }
 
