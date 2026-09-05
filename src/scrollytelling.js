@@ -156,12 +156,25 @@
   // 4. ASISTENTE FLOTANTE LUZ-02 (CONECTADO A /api/chat)
   function initLuzAssistant() {
 
-    // REPRODUCCIÓN AUTOMÁTICA DE VOZ HUMANA (ARGENTINA)
-    let isVoiceActive = true;
-    let currentAudio = null;
+    // REPRODUCCIÓN AUTOMÁTICA DE VOZ HUMANA (AUTOPLAY TOTAL AL ESCRIBIR)
+    let audioPlayer = null;
+
+    function desbloquearAudioContext() {
+      try {
+        if (!audioPlayer) {
+          audioPlayer = new Audio();
+        }
+        // Desbloqueo silencioso inmediato con el gesto del usuario
+        audioPlayer.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+        audioPlayer.play().catch(() => {});
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+        }
+      } catch (e) {}
+    }
 
     function reproducirVozHumana(texto) {
-      if (!isVoiceActive) return;
+      if (typeof isVoiceActive !== 'undefined' && !isVoiceActive) return;
 
       const textoLimpio = texto
         .replace(/[\u{1F600}-\u{1F64F}|\u{1F300}-\u{1F5FF}|\u{1F680}-\u{1F6FF}|\u{1F1E0}-\u{1F1FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}]/gu, '')
@@ -171,17 +184,15 @@
 
       if (!textoLimpio) return;
 
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
+      if (!audioPlayer) {
+        audioPlayer = new Audio();
       }
 
       const audioUrl = '/api/tts?voice=es-AR-ElenaNeural&text=' + encodeURIComponent(textoLimpio);
-      const audio = new Audio(audioUrl);
-      currentAudio = audio;
+      audioPlayer.src = audioUrl;
 
-      audio.play().catch(err => {
-        console.warn('Fallback a SpeechSynthesis nativo:', err);
+      audioPlayer.play().catch(err => {
+        console.warn('Autoplay audio falló, activando SpeechSynthesis nativo:', err);
         try {
           if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
@@ -193,20 +204,11 @@
             if (esVoice) utterance.voice = esVoice;
             window.speechSynthesis.speak(utterance);
           }
-        } catch (e) {}
+        } catch (speechErr) {
+          console.error('Error en síntesis:', speechErr);
+        }
       });
     }
-
-    const btnToggle = document.getElementById('btn-toggle-luz-chat');
-    const btnClose = document.getElementById('btn-close-luz-chat');
-    const chatWindow = document.getElementById('luz-chat-window');
-    const chatForm = document.getElementById('luz-chat-form');
-    const chatInput = document.getElementById('luz-chat-input');
-    const chatBody = document.getElementById('luz-chat-body');
-    const quickChips = document.querySelectorAll('.luz-quick-chip');
-
-    let isOpen = false;
-    let chatHistory = [];
 
     function toggleChat(force) {
       isOpen = typeof force === 'boolean' ? force : !isOpen;
@@ -222,6 +224,9 @@
       } else {
         chatWindow.classList.remove('scale-100', 'opacity-100');
         chatWindow.classList.add('scale-95', 'opacity-0');
+        if (audioPlayer) {
+          audioPlayer.pause();
+        }
         setTimeout(() => {
           chatWindow.classList.add('hidden');
         }, 300);
@@ -231,17 +236,12 @@
     if (btnToggle) btnToggle.addEventListener('click', () => toggleChat());
     if (btnClose) btnClose.addEventListener('click', () => toggleChat(false));
 
-    quickChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        const query = chip.textContent.trim().replace(/^[^\w\s¿]+/, '').trim();
-        handleUserMessage(query);
-      });
-    });
-
     if (chatForm) {
       chatForm.addEventListener('submit', (e) => {
-        desbloquearAudioContext();
         e.preventDefault();
+        e.stopPropagation();
+        desbloquearAudioContext();
+
         const text = chatInput.value.trim();
         if (!text) return;
         chatInput.value = '';
@@ -254,8 +254,8 @@
       chatHistory.push({ role: 'user', content: text });
 
       const indicator = document.createElement('div');
-      indicator.className = 'flex gap-2 items-center text-[10px] text-emerald-300 font-mono italic p-2';
-      indicator.innerHTML = '<span class="animate-spin text-xs">⚡</span> Luz-03 está procesando...';
+      indicator.className = 'flex gap-2 items-center text-[10px] text-amber-300 font-mono italic p-2';
+      indicator.innerHTML = '<span class="animate-spin text-xs">⚡</span> Asistente Luz está pensando...';
       chatBody.appendChild(indicator);
       chatBody.scrollTop = chatBody.scrollHeight;
 
