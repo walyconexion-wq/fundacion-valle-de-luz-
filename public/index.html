@@ -937,7 +937,7 @@
             <p class="text-[10px] text-slate-400">Ingeniería & Atención a la Comunidad</p>
           </div>
         </div>
-        <button id="btn-close-luz-chat" class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
+        <button id="btn-close-luz-chat" onclick="if(window.toggleLuzChat) window.toggleLuzChat(false);" class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -966,7 +966,7 @@
     </div>
 
     <!-- BOTÓN DISPARADOR FLOTANTE -->
-    <button id="btn-toggle-luz-chat" class="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E1B18] hover:from-[#1E293B] hover:to-[#2A241F] border border-amber-500/40 shadow-2xl shadow-black/80 transition-all transform hover:scale-105 active:scale-95">
+    <button id="btn-toggle-luz-chat" onclick="if(window.toggleLuzChat) window.toggleLuzChat();" class="group flex items-center gap-3 px-4 py-3 rounded-2xl bg-gradient-to-r from-[#0F172A] to-[#1E1B18] hover:from-[#1E293B] hover:to-[#2A241F] border border-amber-500/40 shadow-2xl shadow-black/80 transition-all transform hover:scale-105 active:scale-95">
       <div class="relative">
         <div class="w-9 h-9 rounded-xl overflow-hidden border border-emerald-400/50 shadow-md shadow-emerald-500/20 flex items-center justify-center bg-black/60 p-1">
           <img src="favicon-fundacion.svg" alt="Fundación Valle de Luz" class="w-full h-full object-contain">
@@ -1026,6 +1026,6 @@
   </div>
 
   <!-- SCRIPT DE SCROLLYTELLING Y CONTROL -->
-  <script src="src/scrollytelling.js?v=3.2"></script>
+  <script src="src/scrollytelling.js?v=5.0"></script>
 </body>
 </html>

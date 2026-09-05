@@ -221,6 +221,7 @@
     }
 
     function toggleChat(force) {
+      window.toggleLuzChat = toggleChat;
       isOpen = typeof force === 'boolean' ? force : !isOpen;
       if (!chatWindow) return;
 
@@ -754,15 +755,21 @@
     setTimeout(onScrollSpy, 300);
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    try { initScrollSpy(); } catch(e) { console.warn("ScrollSpy:", e); }
-    preloadImages();
-    resizeCanvas();
-    requestAnimationFrame(animationLoop);
-    initLiveClock();
-    initLuzAssistant();
-    initGaleriaPublic();
-    initCommunityForm();
-  });
+  function startApp() {
+    try { if (typeof initScrollSpy === 'function') initScrollSpy(); } catch(e) {}
+    try { if (typeof preloadImages === 'function') preloadImages(); } catch(e) {}
+    try { if (typeof resizeCanvas === 'function') resizeCanvas(); } catch(e) {}
+    try { if (typeof requestAnimationFrame === 'function' && typeof animationLoop === 'function') requestAnimationFrame(animationLoop); } catch(e) {}
+    try { if (typeof initLiveClock === 'function') initLiveClock(); } catch(e) {}
+    try { if (typeof initLuzAssistant === 'function') initLuzAssistant(); } catch(e) {}
+    try { if (typeof initGaleriaPublic === 'function') initGaleriaPublic(); } catch(e) {}
+    try { if (typeof initCommunityForm === 'function') initCommunityForm(); } catch(e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', startApp);
+  } else {
+    startApp();
+  }
 
 })();
